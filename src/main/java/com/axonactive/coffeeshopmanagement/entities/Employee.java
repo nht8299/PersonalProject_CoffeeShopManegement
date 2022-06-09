@@ -26,7 +26,7 @@ public class Employee {
 
     @NotNull
     @Column(length = 30)
-    private String FirstName;
+    private String firstName;
 
     @NotNull
     private LocalDate dateOfBirth;
@@ -38,7 +38,7 @@ public class Employee {
     private String address;
 
     @NotNull
-    private String Identity;
+    private String identity;
 
     private LocalDate startDate;
 

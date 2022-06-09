@@ -1,5 +1,6 @@
 package com.axonactive.coffeeshopmanagement.entities;
 
+import com.axonactive.coffeeshopmanagement.entities.enums.ItemStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +32,7 @@ public class Item {
     private int unitInStock;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private ItemStatus status;
 
     @JoinColumn
     @ManyToOne
