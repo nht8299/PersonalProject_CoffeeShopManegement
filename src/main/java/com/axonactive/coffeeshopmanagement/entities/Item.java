@@ -23,13 +23,13 @@ public class Item {
     private String name;
 
     @NotNull
-    private double costRatePerUnit;
+    private Double costRatePerUnit;
 
     @NotNull
-    private double price;
+    private Double price;
 
     @NotNull
-    private int unitInStock;
+    private Integer unitInStock;
 
     @Enumerated(EnumType.STRING)
     private ItemStatus status;

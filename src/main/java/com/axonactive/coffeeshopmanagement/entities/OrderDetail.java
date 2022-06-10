@@ -21,7 +21,7 @@ public class OrderDetail {
     @NotNull
     private Integer quantity;
 
-    private double discount;
+    private Double discount;
 
     @JoinColumn
     @ManyToOne

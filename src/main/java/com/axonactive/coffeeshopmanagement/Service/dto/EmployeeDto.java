@@ -5,5 +5,5 @@ public class EmployeeDto {
     private String dateOfBirth;
     private String phoneNumber;
     private String address;
-    private String CoffeeShopName;
+    private String coffeeShopName;
 }

@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 public class CoffeeShop {
 
     @Id
-    private String Name;
+    private String name;
 
     @NotNull
     private String phoneNumber;

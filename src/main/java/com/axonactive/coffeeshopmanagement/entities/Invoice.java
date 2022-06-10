@@ -21,7 +21,7 @@ public class Invoice {
     private Integer id;
 
     @NotNull
-    private double totalPrice;
+    private Double totalPrice;
 
     @NotNull
     private LocalDate date;
@@ -31,4 +31,6 @@ public class Invoice {
 
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
+
+
 }
