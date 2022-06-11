@@ -1,5 +1,6 @@
 package com.axonactive.coffeeshopmanagement.Service;
 
+import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
 import com.axonactive.coffeeshopmanagement.entities.Category;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface CategoryService {
     void deleteCategory(String id);
 
     Optional<Category> findCategory(String id);
+
+    Category updateCategory(String id,Category categoryDetail) throws NotFoundException;
 }

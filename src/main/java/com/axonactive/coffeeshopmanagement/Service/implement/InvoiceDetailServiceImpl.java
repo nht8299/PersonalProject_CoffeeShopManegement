@@ -1,8 +1,8 @@
 package com.axonactive.coffeeshopmanagement.Service.implement;
 
-import com.axonactive.coffeeshopmanagement.Service.OrderDetailService;
-import com.axonactive.coffeeshopmanagement.entities.OrderDetail;
-import com.axonactive.coffeeshopmanagement.repositories.OrderDetailRepository;
+import com.axonactive.coffeeshopmanagement.Service.InvoiceDetailService;
+import com.axonactive.coffeeshopmanagement.entities.InvoiceDetail;
+import com.axonactive.coffeeshopmanagement.repositories.InvoiceDetailRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,22 +11,22 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class OrderDetailServiceImpl implements OrderDetailService {
+public class InvoiceDetailServiceImpl implements InvoiceDetailService {
 
-    private final OrderDetailRepository orderDetailRepository;
+    private final InvoiceDetailRepository orderDetailRepository;
 
     @Override
-    public List<OrderDetail> getAll() {
+    public List<InvoiceDetail> getAll() {
         return orderDetailRepository.findAll();
     }
 
     @Override
-    public OrderDetail createOrderDetail(OrderDetail orderDetail) {
+    public InvoiceDetail createOrderDetail(InvoiceDetail orderDetail) {
         return orderDetailRepository.save(orderDetail);
     }
 
     @Override
-    public Optional<OrderDetail> findOrderDetail(Integer id) {
+    public Optional<InvoiceDetail> findOrderDetail(Integer id) {
         return orderDetailRepository.findById(id);
     }
 

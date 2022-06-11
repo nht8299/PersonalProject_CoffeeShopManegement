@@ -3,10 +3,10 @@ package com.axonactive.coffeeshopmanagement.Service.dto;
 import lombok.Data;
 
 @Data
-public class OrderDetailDto {
+public class InvoiceDetailDto {
 
     private String itemName;
-    private Double price;
+    private Double itemPrice;
     private Integer quantity;
     private Double discount;
 

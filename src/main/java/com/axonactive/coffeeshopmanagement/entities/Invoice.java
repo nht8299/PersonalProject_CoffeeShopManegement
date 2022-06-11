@@ -32,5 +32,13 @@ public class Invoice {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
+    @JoinColumn
+    @ManyToOne
+    private Customer customer;
+
+    @JoinColumn
+    @ManyToOne
+    private Employee employee;
+
 
 }

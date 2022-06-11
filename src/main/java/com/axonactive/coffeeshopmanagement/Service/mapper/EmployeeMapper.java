@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface EmployeeMapper {
 
-    @Mapping(target = "fullname",expression = "java(employee.getFirstName() + \" \" +employee.getMiddleName+\" \"+employee.getLastName())")
+    @Mapping(target = "fullName",expression = "java(employee.getFirstName() + \" \" +employee.getMiddleName+\" \"+employee.getLastName())")
     @Mapping(source = "employee.coffeeShop.name",target = "coffeeShopName")
     EmployeeDto toDto(Employee employee);
 

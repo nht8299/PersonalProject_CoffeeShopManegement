@@ -1,36 +1,33 @@
 package com.axonactive.coffeeshopmanagement.entities;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-public class Orders {
+public class InvoiceDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @NotNull
-    private LocalDate creationDate;
+    private Integer quantity;
 
-    @NotNull
-    private LocalDate orderDate;
-
-    private String orderDescription;
+    private Double discount;
 
     @JoinColumn
     @ManyToOne
-    private Customer customer;
+    private Invoice invoice;
 
     @JoinColumn
     @ManyToOne
-    private Employee employee;
+    private Item item;
 }

@@ -1,5 +1,6 @@
 package com.axonactive.coffeeshopmanagement.Service.implement;
 
+import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
 import com.axonactive.coffeeshopmanagement.Service.CoffeeShopService;
 import com.axonactive.coffeeshopmanagement.entities.CoffeeShop;
 import com.axonactive.coffeeshopmanagement.repositories.CoffeeShopRepository;
@@ -26,12 +27,24 @@ public class CoffeeShopServiceImpl implements CoffeeShopService {
     }
 
     @Override
-    public Optional<CoffeeShop> findCoffeeShop(String name) {
-        return coffeeShopRepository.findById(name);
+    public Optional<CoffeeShop> findCoffeeShop(Integer id) {
+        return coffeeShopRepository.findById(id);
     }
 
     @Override
-    public void deleteCoffeeShop(String name) {
-        coffeeShopRepository.deleteById(name);
+    public void deleteCoffeeShop(Integer id) {
+        coffeeShopRepository.deleteById(id);
+    }
+
+    @Override
+    public CoffeeShop update(Integer id, CoffeeShop coffeeShopDetail) throws NotFoundException {
+        CoffeeShop updateCoffeeShop = coffeeShopRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("CoffeeShop Not Found: " + id));
+        updateCoffeeShop.setName(coffeeShopDetail.getName());
+        updateCoffeeShop.setLocation(coffeeShopDetail.getLocation());
+        updateCoffeeShop.setPhoneNumber(coffeeShopDetail.getPhoneNumber());
+        updateCoffeeShop.setHomepage(coffeeShopDetail.getHomepage());
+        updateCoffeeShop.setAddress(coffeeShopDetail.getAddress());
+        return coffeeShopRepository.save(updateCoffeeShop);
     }
 }

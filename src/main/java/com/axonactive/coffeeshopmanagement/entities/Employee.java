@@ -42,8 +42,6 @@ public class Employee {
 
     private LocalDate startDate;
 
-    private String managerId;
-
     @ManyToOne
     @JoinColumn
     private CoffeeShop coffeeShop;

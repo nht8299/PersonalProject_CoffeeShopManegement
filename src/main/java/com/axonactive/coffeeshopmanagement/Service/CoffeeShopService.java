@@ -1,5 +1,6 @@
 package com.axonactive.coffeeshopmanagement.Service;
 
+import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
 import com.axonactive.coffeeshopmanagement.entities.CoffeeShop;
 
 import java.util.List;
@@ -11,7 +12,9 @@ public interface CoffeeShopService {
 
     CoffeeShop createCoffeeShop(CoffeeShop coffeeShop);
 
-    Optional<CoffeeShop> findCoffeeShop(String name);
+    Optional<CoffeeShop> findCoffeeShop(Integer id);
 
-    void deleteCoffeeShop(String name);
+    void deleteCoffeeShop(Integer id);
+
+    CoffeeShop update(Integer id,CoffeeShop coffeeShopDetail) throws NotFoundException;
 }

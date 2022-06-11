@@ -1,5 +1,6 @@
 package com.axonactive.coffeeshopmanagement.Service;
 
+import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
 import com.axonactive.coffeeshopmanagement.entities.Customer;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public interface CustomerService {
 
     void deleteCustomer (Integer id);
 
+    Customer update(Integer id,Customer customerDetails) throws NotFoundException;
 }

@@ -1,5 +1,6 @@
 package com.axonactive.coffeeshopmanagement.Service.implement;
 
+import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
 import com.axonactive.coffeeshopmanagement.Service.CategoryService;
 import com.axonactive.coffeeshopmanagement.entities.Category;
 import com.axonactive.coffeeshopmanagement.repositories.CategoryRepository;
@@ -33,5 +34,14 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Optional<Category> findCategory(String id) {
         return categoryRepository.findById(id);
+    }
+
+    @Override
+    public Category updateCategory(String id, Category categoryDetail) throws NotFoundException {
+        Category updateCategory = categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Category Not Found: " + id));
+        updateCategory.setName(categoryDetail.getName());
+        updateCategory.setDescription(categoryDetail.getDescription());
+        return categoryRepository.save(updateCategory);
     }
 }

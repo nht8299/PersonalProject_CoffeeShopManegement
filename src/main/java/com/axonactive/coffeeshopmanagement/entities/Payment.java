@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -30,13 +27,18 @@ public class Payment {
     private Role role;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private EmployeeType employeeType;
 
-
+    @NotNull
     private Integer workingHours;
 
     private Double bonus;
 
     @NotNull
     private Double Salary;
+
+    @JoinColumn
+    @ManyToOne
+    private Employee employee;
 }
