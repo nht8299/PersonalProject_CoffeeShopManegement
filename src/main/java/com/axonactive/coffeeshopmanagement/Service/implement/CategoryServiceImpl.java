@@ -44,4 +44,9 @@ public class CategoryServiceImpl implements CategoryService {
         updateCategory.setDescription(categoryDetail.getDescription());
         return categoryRepository.save(updateCategory);
     }
+
+    @Override
+    public Category findByName(String name) {
+        return categoryRepository.findByNameContaining(name);
+    }
 }

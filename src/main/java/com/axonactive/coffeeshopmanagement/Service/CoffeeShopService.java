@@ -17,4 +17,6 @@ public interface CoffeeShopService {
     void deleteCoffeeShop(Integer id);
 
     CoffeeShop update(Integer id,CoffeeShop coffeeShopDetail) throws NotFoundException;
+
+    CoffeeShop findByName (String name);
 }

@@ -10,8 +10,9 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface InvoiceDetailMapper {
 
+    @Mapping (target = "invoiceId",source = "invoiceDetail.invoice.id")
     @Mapping(target = "itemName",source = "invoiceDetail.item.name")
-    @Mapping(target = "itemPrice",source = "invoiceDtail.item.price")
+    @Mapping(target = "itemPrice",source = "invoiceDetail.item.price")
 
     InvoiceDetailDto toDto (InvoiceDetail invoiceDetail);
     List<InvoiceDetailDto> toDtos(List<InvoiceDetail> invoiceDetails);

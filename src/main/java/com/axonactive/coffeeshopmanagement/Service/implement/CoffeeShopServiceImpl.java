@@ -47,4 +47,9 @@ public class CoffeeShopServiceImpl implements CoffeeShopService {
         updateCoffeeShop.setAddress(coffeeShopDetail.getAddress());
         return coffeeShopRepository.save(updateCoffeeShop);
     }
+
+    @Override
+    public CoffeeShop findByName(String name) {
+        return coffeeShopRepository.findByNameContaining(name);
+    }
 }

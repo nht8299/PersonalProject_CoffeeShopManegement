@@ -1,5 +1,6 @@
 package com.axonactive.coffeeshopmanagement.entities;
 
+import com.axonactive.coffeeshopmanagement.entities.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,6 +40,10 @@ public class Employee {
 
     @NotNull
     private String identity;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     private LocalDate startDate;
 

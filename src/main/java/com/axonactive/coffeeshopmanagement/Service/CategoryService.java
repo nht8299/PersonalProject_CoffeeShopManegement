@@ -16,4 +16,6 @@ public interface CategoryService {
     Optional<Category> findCategory(String id);
 
     Category updateCategory(String id,Category categoryDetail) throws NotFoundException;
+
+    Category findByName(String name);
 }

@@ -1,5 +1,6 @@
 package com.axonactive.coffeeshopmanagement.Service;
 
+import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
 import com.axonactive.coffeeshopmanagement.entities.Employee;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface EmployeeService {
     Optional<Employee> findEmployee(String id);
 
     void deleteEmployee(String id);
+
+    Employee update(String id,Employee requestEmployee) throws NotFoundException;
 }
