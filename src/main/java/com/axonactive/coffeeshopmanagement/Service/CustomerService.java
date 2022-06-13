@@ -17,4 +17,6 @@ public interface CustomerService {
     void deleteCustomer (Integer id);
 
     Customer update(Integer id,Customer customerDetails) throws NotFoundException;
+
+    Optional<Customer> findByPhoneNumber(String phoneNumber);
 }

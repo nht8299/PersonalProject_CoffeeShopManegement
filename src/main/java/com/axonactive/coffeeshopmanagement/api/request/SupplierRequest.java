@@ -1,14 +1,15 @@
-package com.axonactive.coffeeshopmanagement.Service.dto;
+package com.axonactive.coffeeshopmanagement.api.request;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SupplierDto {
-    private Integer id;
+@Data
+public class SupplierRequest {
+
     private String CompanyName;
     private String address;
     private String Location;

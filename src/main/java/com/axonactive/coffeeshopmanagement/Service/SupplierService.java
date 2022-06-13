@@ -15,4 +15,6 @@ public interface SupplierService {
     Optional<Supplier> findSupplier(Integer id);
 
     void deleteSupplier(Integer id);
+
+    Supplier update(Integer id, Supplier updateSupplier);
 }

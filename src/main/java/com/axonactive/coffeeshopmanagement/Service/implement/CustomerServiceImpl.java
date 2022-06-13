@@ -46,4 +46,9 @@ public class CustomerServiceImpl implements CustomerService {
         updateCustomer.setFeedBack(customerDetails.getFeedBack());
         return customerRepository.save(updateCustomer);
     }
+
+    @Override
+    public Optional<Customer> findByPhoneNumber(String phoneNumber) {
+        return customerRepository.findByPhoneNumber(phoneNumber);
+    }
 }

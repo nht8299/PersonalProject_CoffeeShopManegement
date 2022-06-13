@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface PaymentMapper {
     @Mapping(target = "employeeId",source = "payment.employee.id")
-    @Mapping(target = "employeeFullName",source = "java(payment.employee().getFirstName() + \" \" +payment.employee().getMiddleName+\" \"+payment.employee().getLastName())")
+    @Mapping(target = "employeeFullName",expression= "java(payment.getEmployee().getFirstName() + \" \" +payment.getEmployee().getMiddleName()+\" \"+payment.getEmployee().getLastName())")
     @Mapping(target = "employeePhoneNumber",source = "payment.employee.phoneNumber")
     PaymentDto toDto (Payment payment);
     List<PaymentDto> toDtos (List<Payment> payments);

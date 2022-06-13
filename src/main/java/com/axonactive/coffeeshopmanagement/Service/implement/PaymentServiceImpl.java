@@ -34,4 +34,17 @@ public class PaymentServiceImpl implements PaymentService {
     public void deletePayment(Integer id) {
         paymentRepository.deleteById(id);
     }
+
+    @Override
+    public Payment update(Integer id, Payment updatePayment) {
+        Payment payment = new Payment();
+        payment.setEmployee(updatePayment.getEmployee());
+        payment.setSalary(updatePayment.getSalary());
+        payment.setRole(updatePayment.getRole());
+        payment.setDate(updatePayment.getDate());
+        payment.setBonus(updatePayment.getBonus());
+        payment.setEmployeeType(updatePayment.getEmployeeType());
+        payment.setWorkingHours(updatePayment.getWorkingHours());
+        return paymentRepository.save(payment);
+    }
 }

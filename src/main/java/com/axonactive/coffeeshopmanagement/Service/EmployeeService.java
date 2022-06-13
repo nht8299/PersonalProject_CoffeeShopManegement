@@ -17,4 +17,6 @@ public interface EmployeeService {
     void deleteEmployee(String id);
 
     Employee update(String id,Employee requestEmployee) throws NotFoundException;
+
+    Employee findByPhoneNumber (String phoneNumber);
 }

@@ -35,4 +35,15 @@ public class SupplierServiceImpl implements SupplierService {
     public void deleteSupplier(Integer id) {
         supplierRepository.deleteById(id);
     }
+
+    @Override
+    public Supplier update(Integer id, Supplier updateSupplier) {
+        Supplier supplier = new Supplier();
+        supplier.setAddress(updateSupplier.getAddress());
+        supplier.setCompanyName(updateSupplier.getCompanyName());
+        supplier.setPhoneNumber(updateSupplier.getPhoneNumber());
+        supplier.setHomePage(updateSupplier.getHomePage());
+        supplier.setLocation(updateSupplier.getLocation());
+        return supplierRepository.save(supplier);
+    }
 }

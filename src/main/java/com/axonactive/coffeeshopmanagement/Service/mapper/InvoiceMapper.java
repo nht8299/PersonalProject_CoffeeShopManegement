@@ -12,8 +12,7 @@ public interface InvoiceMapper {
 
     @Mapping(target = "customerName",source = "invoice.customer.fullName")
     @Mapping(target = "customerPhoneNumber",source = "invoice.customer.phoneNumber")
-    @Mapping(target = "enployeeFullName",expression = "java(invoice.employee().getFirstName() + \" \" +invoice.employee().getMiddleName+\" \"+invoice.employee().getLastName())")
-    @Mapping(target = "orderDetailDtos",expression = "")
+    @Mapping(target = "employeeFullName",expression = "java(invoice.getEmployee().getFirstName() + \" \" +invoice.getEmployee().getMiddleName()+\" \"+invoice.getEmployee().getLastName())")
 
     InvoiceDto toDto (Invoice invoice);
     List<InvoiceDto> toDtos (List<Invoice> invoices);

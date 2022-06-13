@@ -51,4 +51,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         updateEmployee.setLastName(requestEmployee.getLastName());
         return employeeRepository.save(updateEmployee);
     }
+
+    @Override
+    public Employee findByPhoneNumber(String phoneNumber) {
+        return employeeRepository.findByPhoneNumber(phoneNumber);
+    }
 }

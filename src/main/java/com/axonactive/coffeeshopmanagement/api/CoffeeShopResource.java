@@ -50,13 +50,13 @@ public class CoffeeShopResource {
                 .body(coffeeShopMapper.toDto(createCoffeeShop));
     }
 
-    @DeleteMapping("{/id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id")Integer id){
         coffeeShopService.deleteCoffeeShop(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{/id}")
+    @PutMapping("{id}")
     public ResponseEntity<CoffeeShopDto> update(@PathVariable(value = "id")Integer id, @RequestBody CoffeeShopRequest requestCoffeeShop) throws NotFoundException {
         CoffeeShop updateCoffeeShop = new CoffeeShop();
         updateCoffeeShop.setName(requestCoffeeShop.getName());

@@ -1,7 +1,13 @@
 package com.axonactive.coffeeshopmanagement.Service.dto;
 
 import com.axonactive.coffeeshopmanagement.entities.enums.ItemStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ItemDto {
 
     private String id;
@@ -10,5 +16,5 @@ public class ItemDto {
     private Double price;
     private Integer unitInStock;
     private ItemStatus status;
-    private String  categoryName;
+    private String categoryName;
 }

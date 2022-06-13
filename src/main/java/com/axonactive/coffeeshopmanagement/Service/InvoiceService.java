@@ -14,4 +14,6 @@ public interface InvoiceService {
     Optional<Invoice> findInvoice(Integer id);
 
     void deleteInvoice (Integer id);
+
+    Invoice update (Integer id,Invoice updateInvoice);
 }

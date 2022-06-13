@@ -23,6 +23,8 @@ public class InvoiceDetail {
 
     private Double discount;
 
+    private Double finalPrice;
+
     @JoinColumn
     @ManyToOne
     private Invoice invoice;

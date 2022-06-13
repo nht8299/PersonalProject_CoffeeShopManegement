@@ -15,4 +15,6 @@ public interface PaymentService {
 
     void deletePayment(Integer id);
 
+    Payment update(Integer id,Payment updatePayment);
+
 }

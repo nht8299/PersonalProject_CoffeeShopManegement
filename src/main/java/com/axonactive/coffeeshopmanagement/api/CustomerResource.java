@@ -49,7 +49,7 @@ public class CustomerResource {
                 .body(customerMapper.toDto(createCustomer));
     }
 
-    @DeleteMapping("{/id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id")Integer id){
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();

@@ -13,9 +13,6 @@ import java.time.LocalTime;
 @NoArgsConstructor
 public class InvoiceRequest {
 
-    private String id;
-    private LocalDate date;
-    private LocalTime time;
     private Double totalPrice;
     private PaymentMethod paymentMethod;
     private String customerPhoneNumber;

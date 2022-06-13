@@ -54,10 +54,10 @@ public class EmployeeResource {
         newEmployee.setStartDate(requestEmployee.getStartDate());
         newEmployee.setGender(requestEmployee.getGender());
         newEmployee.setCoffeeShop(coffeeShopService.findByName(requestEmployee.getCoffeeShopName()));
-        Employee creatEmployee = employeeService.createEmployee(newEmployee);
+        Employee createEmployee = employeeService.createEmployee(newEmployee);
         return ResponseEntity
-                .created(URI.create(EmployeeResource.PATH +"/"+creatEmployee.getId()))
-                .body(employeeMapper.toDto(creatEmployee));
+                .created(URI.create(EmployeeResource.PATH +"/"+ createEmployee.getId()))
+                .body(employeeMapper.toDto(createEmployee));
     }
 
     @DeleteMapping("/{id}")
