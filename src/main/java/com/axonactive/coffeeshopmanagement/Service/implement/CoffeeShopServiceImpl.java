@@ -49,7 +49,7 @@ public class CoffeeShopServiceImpl implements CoffeeShopService {
     }
 
     @Override
-    public CoffeeShop findByName(String name) {
+    public Optional<CoffeeShop> findByName(String name) {
         return coffeeShopRepository.findByNameContaining(name);
     }
 }

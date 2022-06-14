@@ -7,6 +7,7 @@ import com.axonactive.coffeeshopmanagement.Service.dto.EmployeeDto;
 import com.axonactive.coffeeshopmanagement.Service.mapper.EmployeeMapper;
 import com.axonactive.coffeeshopmanagement.api.request.EmployeeRequest;
 import com.axonactive.coffeeshopmanagement.entities.Employee;
+import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class EmployeeResource {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeDto> add(@RequestBody EmployeeRequest requestEmployee){
+    public ResponseEntity<EmployeeDto> add(@RequestBody EmployeeRequest requestEmployee) throws NotFoundException {
         Employee newEmployee = new Employee();
         newEmployee.setId(requestEmployee.getId());
         newEmployee.setLastName(requestEmployee.getLastName());
@@ -53,7 +54,8 @@ public class EmployeeResource {
         newEmployee.setDateOfBirth(requestEmployee.getDateOfBirth());
         newEmployee.setStartDate(requestEmployee.getStartDate());
         newEmployee.setGender(requestEmployee.getGender());
-        newEmployee.setCoffeeShop(coffeeShopService.findByName(requestEmployee.getCoffeeShopName()));
+        newEmployee.setCoffeeShop(coffeeShopService.findByName(requestEmployee.getCoffeeShopName())
+                .orElseThrow(() -> new NotFoundException("CoffeeShop not found: "+requestEmployee.getCoffeeShopName())));
         Employee createEmployee = employeeService.createEmployee(newEmployee);
         return ResponseEntity
                 .created(URI.create(EmployeeResource.PATH +"/"+ createEmployee.getId()))
@@ -77,7 +79,8 @@ public class EmployeeResource {
         updateEmployee.setPhoneNumber(requestEmployee.getPhoneNumber());
         updateEmployee.setGender(requestEmployee.getGender());
         updateEmployee.setStartDate(requestEmployee.getStartDate());
-        updateEmployee.setCoffeeShop(coffeeShopService.findByName(requestEmployee.getCoffeeShopName()));
+        updateEmployee.setCoffeeShop(coffeeShopService.findByName(requestEmployee.getCoffeeShopName())
+                .orElseThrow(() -> new NotFoundException("CoffeeShop not found: "+ requestEmployee.getCoffeeShopName())));
         return ResponseEntity.ok(employeeMapper.toDto(employeeService.update(id,updateEmployee)));
     }
 }

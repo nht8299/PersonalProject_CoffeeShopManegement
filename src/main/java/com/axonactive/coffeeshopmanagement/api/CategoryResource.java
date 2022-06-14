@@ -30,7 +30,7 @@ public class CategoryResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> findCategoryById(@PathVariable(value = "id")String id)throws NotFoundException{
+    public ResponseEntity<CategoryDto> findCategoryById(@PathVariable(value = "id")Integer id)throws NotFoundException{
         return ResponseEntity.ok(categoryMapper.toDto(categoryService.findCategory(id)
                 .orElseThrow(() -> new NotFoundException("Category not found "+ id))));
     }
@@ -38,7 +38,6 @@ public class CategoryResource {
     @PostMapping
     public ResponseEntity<CategoryDto> add(@RequestBody Category category){
         Category newCategory =new Category();
-        newCategory.setId(category.getId());
         newCategory.setName(category.getName());
         newCategory.setDescription(category.getDescription());
         Category createCategory = categoryService.saveCategory(newCategory);
@@ -48,13 +47,13 @@ public class CategoryResource {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id")String id){
+    public ResponseEntity<Void> delete(@PathVariable(value = "id")Integer id){
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDto> update(@PathVariable(value = "id")String id,@RequestBody Category requestCategory) throws NotFoundException {
+    public ResponseEntity<CategoryDto> update(@PathVariable(value = "id")Integer id,@RequestBody Category requestCategory) throws NotFoundException {
         Category updateCategory = new Category();
         updateCategory.setName(requestCategory.getName());
         updateCategory.setDescription(requestCategory.getDescription());

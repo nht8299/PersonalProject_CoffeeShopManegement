@@ -18,5 +18,5 @@ public interface CoffeeShopService {
 
     CoffeeShop update(Integer id,CoffeeShop coffeeShopDetail) throws NotFoundException;
 
-    CoffeeShop findByName (String name);
+    Optional<CoffeeShop> findByName (String name);
 }

@@ -11,11 +11,11 @@ public interface CategoryService {
 
     Category saveCategory(Category category);
 
-    void deleteCategory(String id);
+    void deleteCategory(Integer id);
 
-    Optional<Category> findCategory(String id);
+    Optional<Category> findCategory(Integer id);
 
-    Category updateCategory(String id,Category categoryDetail) throws NotFoundException;
+    Category updateCategory(Integer id,Category categoryDetail) throws NotFoundException;
 
     Category findByName(String name);
 }

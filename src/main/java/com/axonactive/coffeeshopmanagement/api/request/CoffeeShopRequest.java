@@ -13,5 +13,5 @@ public class CoffeeShopRequest {
     private String phoneNumber;
     private String location;
     private String address;
-    private String homePage;
+    private String homepage;
 }

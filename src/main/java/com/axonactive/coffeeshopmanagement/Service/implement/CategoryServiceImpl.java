@@ -27,17 +27,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteCategory(String id) {
+    public void deleteCategory(Integer id) {
         categoryRepository.deleteById(id);
     }
 
     @Override
-    public Optional<Category> findCategory(String id) {
+    public Optional<Category> findCategory(Integer id) {
         return categoryRepository.findById(id);
     }
 
     @Override
-    public Category updateCategory(String id, Category categoryDetail) throws NotFoundException {
+    public Category updateCategory(Integer id, Category categoryDetail) throws NotFoundException {
         Category updateCategory = categoryRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Category Not Found: " + id));
         updateCategory.setName(categoryDetail.getName());

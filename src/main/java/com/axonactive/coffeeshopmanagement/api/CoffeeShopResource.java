@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(CoffeeShopResource.PATH)
 public class CoffeeShopResource {
 
-    public static final String PATH="/api/coffeeshop";
+    public static final String PATH = "/api/coffeeshop";
 
     @Autowired
     CoffeeShopService coffeeShopService;
@@ -26,18 +26,22 @@ public class CoffeeShopResource {
     CoffeeShopMapper coffeeShopMapper;
 
     @GetMapping
-    public ResponseEntity<List<CoffeeShopDto>> getAll(){
+    public ResponseEntity<List<CoffeeShopDto>> getAll() {
         return ResponseEntity.ok(coffeeShopMapper.toDtos(coffeeShopService.getAll()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CoffeeShopDto>findCoffeeShopById(@PathVariable(value = "id")Integer id) throws NotFoundException {
-        return ResponseEntity.ok(coffeeShopMapper.toDto(coffeeShopService.findCoffeeShop(id)
-                .orElseThrow(() -> new NotFoundException("CoffeeShop not found: "+ id))));
+    public ResponseEntity<CoffeeShopDto> findCoffeeShopById(@PathVariable(value = "id") Integer id, @RequestParam(value = "name", required = false) String name) throws NotFoundException {
+        if (name == null) {
+            return ResponseEntity.ok(coffeeShopMapper.toDto(coffeeShopService.findCoffeeShop(id)
+                    .orElseThrow(() -> new NotFoundException("CoffeeShop not found: " + id))));
+        }  return ResponseEntity.ok(coffeeShopMapper.toDto(coffeeShopService.findByName(name)
+                .orElseThrow(() -> new NotFoundException("CoffeeShop not found: "+name))));
     }
 
+
     @PostMapping
-    public ResponseEntity<CoffeeShopDto> add(@RequestBody CoffeeShop requestCoffeeShop){
+    public ResponseEntity<CoffeeShopDto> add(@RequestBody CoffeeShop requestCoffeeShop) {
         CoffeeShop newCoffeeShop = new CoffeeShop();
         newCoffeeShop.setName(requestCoffeeShop.getName());
         newCoffeeShop.setAddress(requestCoffeeShop.getAddress());
@@ -51,20 +55,19 @@ public class CoffeeShopResource {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id")Integer id){
+    public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
         coffeeShopService.deleteCoffeeShop(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<CoffeeShopDto> update(@PathVariable(value = "id")Integer id, @RequestBody CoffeeShopRequest requestCoffeeShop) throws NotFoundException {
+    public ResponseEntity<CoffeeShopDto> update(@PathVariable(value = "id") Integer id, @RequestBody CoffeeShopRequest requestCoffeeShop) throws NotFoundException {
         CoffeeShop updateCoffeeShop = new CoffeeShop();
         updateCoffeeShop.setName(requestCoffeeShop.getName());
         updateCoffeeShop.setAddress(requestCoffeeShop.getAddress());
-        updateCoffeeShop.setHomepage(requestCoffeeShop.getHomePage());
+        updateCoffeeShop.setHomepage(requestCoffeeShop.getHomepage());
         updateCoffeeShop.setLocation(requestCoffeeShop.getLocation());
         updateCoffeeShop.setPhoneNumber(requestCoffeeShop.getPhoneNumber());
-        return ResponseEntity.ok(coffeeShopMapper.toDto(coffeeShopService.update(id,updateCoffeeShop)));
+        return ResponseEntity.ok(coffeeShopMapper.toDto(coffeeShopService.update(id, updateCoffeeShop)));
     }
-
 }
