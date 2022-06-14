@@ -13,5 +13,5 @@ public interface PaymentMapper {
     @Mapping(target = "employeeFullName",expression= "java(payment.getEmployee().getFirstName() + \" \" +payment.getEmployee().getMiddleName()+\" \"+payment.getEmployee().getLastName())")
     @Mapping(target = "employeePhoneNumber",source = "payment.employee.phoneNumber")
     PaymentDto toDto (Payment payment);
-    List<PaymentDto> toDtos (List<Payment> payments);
+    List<PaymentDto> toDtos (List<Payment> Payments);
 }

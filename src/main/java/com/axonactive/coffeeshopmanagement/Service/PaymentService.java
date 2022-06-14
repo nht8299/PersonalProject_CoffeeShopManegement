@@ -9,12 +9,12 @@ public interface PaymentService {
 
     List<Payment> getAll();
 
-    Payment createPayment(Payment payment);
+    Payment createPayment(Payment Payment);
 
     Optional<Payment> findPayment(Integer id);
 
     void deletePayment(Integer id);
 
-    Payment update(Integer id,Payment updatePayment);
+    Payment update(Integer id, Payment updatePayment);
 
 }

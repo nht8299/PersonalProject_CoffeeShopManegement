@@ -13,38 +13,38 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
 
-    private final PaymentRepository paymentRepository;
+    private final PaymentRepository PaymentRepository;
 
     @Override
     public List<Payment> getAll() {
-        return paymentRepository.findAll();
+        return PaymentRepository.findAll();
     }
 
     @Override
-    public Payment createPayment(Payment payment) {
-        return paymentRepository.save(payment);
+    public Payment createPayment (Payment Payment) {
+        return PaymentRepository.save(Payment);
     }
 
     @Override
     public Optional<Payment> findPayment(Integer id) {
-        return paymentRepository.findById(id);
+        return PaymentRepository.findById(id);
     }
 
     @Override
     public void deletePayment(Integer id) {
-        paymentRepository.deleteById(id);
+        PaymentRepository.deleteById(id);
     }
 
     @Override
     public Payment update(Integer id, Payment updatePayment) {
-        Payment payment = new Payment();
-        payment.setEmployee(updatePayment.getEmployee());
-        payment.setSalary(updatePayment.getSalary());
-        payment.setRole(updatePayment.getRole());
-        payment.setDate(updatePayment.getDate());
-        payment.setBonus(updatePayment.getBonus());
-        payment.setEmployeeType(updatePayment.getEmployeeType());
-        payment.setWorkingHours(updatePayment.getWorkingHours());
-        return paymentRepository.save(payment);
+        Payment Payment = new Payment();
+        Payment.setEmployee(updatePayment.getEmployee());
+        Payment.setSalary(updatePayment.getSalary());
+        Payment.setRole(updatePayment.getRole());
+        Payment.setDate(updatePayment.getDate());
+        Payment.setBonus(updatePayment.getBonus());
+        Payment.setEmployeeType(updatePayment.getEmployeeType());
+        Payment.setWorkingHours(updatePayment.getWorkingHours());
+        return PaymentRepository.save(Payment);
     }
 }

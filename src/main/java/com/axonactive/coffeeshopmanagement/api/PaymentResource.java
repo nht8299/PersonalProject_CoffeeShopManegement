@@ -21,22 +21,22 @@ public class PaymentResource {
     public static final String PATH = "/api/payment";
 
     @Autowired
-    PaymentService paymentService;
+    PaymentService PaymentService;
 
     @Autowired
-    PaymentMapper paymentMapper;
+    PaymentMapper PaymentMapper;
 
     @Autowired
     EmployeeService employeeService;
 
     @GetMapping
     public ResponseEntity<List<PaymentDto>> getAll(){
-        return ResponseEntity.ok(paymentMapper.toDtos(paymentService.getAll()));
+        return ResponseEntity.ok(PaymentMapper.toDtos(PaymentService.getAll()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PaymentDto> findPaymentById(@PathVariable(value = "id")Integer id) throws NotFoundException {
-        return ResponseEntity.ok(paymentMapper.toDto(paymentService.findPayment(id)
+        return ResponseEntity.ok(PaymentMapper.toDto(PaymentService.findPayment(id)
                 .orElseThrow(() -> new NotFoundException("Payment not found: "+id))));
     }
 
@@ -49,20 +49,20 @@ public class PaymentResource {
         newPayment.setEmployeeType(requestPayment.getEmployeeType());
         newPayment.setSalary(requestPayment.getSalary());
         newPayment.setEmployee(employeeService.findByPhoneNumber(requestPayment.getEmployeePhoneNumber()));
-        Payment createPayment = paymentService.createPayment(newPayment);
+        Payment createPayment = PaymentService.createPayment(newPayment);
         return ResponseEntity
-                .created(URI.create(PaymentResource.PATH+"/"+createPayment.getId()))
-                .body(paymentMapper.toDto(createPayment));
+                .created(URI.create(PaymentResource.PATH+"/"+ createPayment.getId()))
+                .body(PaymentMapper.toDto(createPayment));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id")Integer id){
-        paymentService.deletePayment(id);
+        PaymentService.deletePayment(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PaymentDto> update(@PathVariable(value = "id")Integer id,@RequestBody PaymentRequest requestPayment){
+    public ResponseEntity<PaymentDto> update(@PathVariable(value = "id")Integer id, @RequestBody PaymentRequest requestPayment){
         Payment updatePayment = new Payment();
         updatePayment.setBonus(requestPayment.getBonus());
         updatePayment.setDate(requestPayment.getDate());
@@ -70,6 +70,6 @@ public class PaymentResource {
         updatePayment.setEmployeeType(requestPayment.getEmployeeType());
         updatePayment.setSalary(requestPayment.getSalary());
         updatePayment.setEmployee(employeeService.findByPhoneNumber(requestPayment.getEmployeePhoneNumber()));
-        return ResponseEntity.ok(paymentMapper.toDto(paymentService.update(id,updatePayment)));
+        return ResponseEntity.ok(PaymentMapper.toDto(PaymentService.update(id, updatePayment)));
     }
 }
