@@ -20,7 +20,6 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull
     private Double totalPrice;
 
     @NotNull

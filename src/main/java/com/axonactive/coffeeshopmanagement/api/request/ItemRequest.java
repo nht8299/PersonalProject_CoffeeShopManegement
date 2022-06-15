@@ -14,7 +14,6 @@ public class ItemRequest {
     private String name;
     private Double costRatePerUnit;
     private Double price;
-    private Integer unitInStock;
     private ItemStatus status;
     private String categoryName;
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -50,7 +51,7 @@ public class InvoiceResource {
     public ResponseEntity<InvoiceDto> add(@RequestBody InvoiceRequest requestInvoice) throws NotFoundException {
         Invoice newInvoice = new Invoice();
         newInvoice.setDate(LocalDate.now());
-        newInvoice.setTime(LocalTime.now());
+        newInvoice.setTime(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
         newInvoice.setEmployee(employeeService.findEmployee(requestInvoice.getEmployeeId())
                 .orElseThrow(() -> new NotFoundException("Employee not found: "+ requestInvoice.getEmployeeId()) ));
         newInvoice.setCustomer(customerService.findByPhoneNumber(requestInvoice.getCustomerPhoneNumber())
@@ -70,9 +71,9 @@ public class InvoiceResource {
 
     @PutMapping("{id}")
     public ResponseEntity<InvoiceDto> update(@PathVariable(value = "id")Integer id,@RequestBody InvoiceRequest requestInvoice) throws NotFoundException {
-        Invoice updateInvoice = new Invoice();
+        Invoice updateInvoice = invoiceService.findInvoice(id).orElseThrow(() -> new NotFoundException("Invoice not found: "+id));
         updateInvoice.setDate(LocalDate.now());
-        updateInvoice.setTime(LocalTime.now());
+        updateInvoice.setTime(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
         updateInvoice.setEmployee(employeeService.findEmployee(requestInvoice.getEmployeeId())
                 .orElseThrow(() -> new NotFoundException("Employee not found: "+ requestInvoice.getEmployeeId()) ));
         updateInvoice.setCustomer(customerService.findByPhoneNumber(requestInvoice.getCustomerPhoneNumber())

@@ -49,7 +49,6 @@ public class ItemServiceImpl implements ItemService {
          item.setName(updateItem.getName());
          item.setPrice(updateItem.getPrice());
          item.setStatus(updateItem.getStatus());
-         item.setUnitInStock(updateItem.getUnitInStock());
          item.setCostRatePerUnit(updateItem.getCostRatePerUnit());
         return itemRepository.save(item);
     }

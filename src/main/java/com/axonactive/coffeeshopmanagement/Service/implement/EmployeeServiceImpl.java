@@ -53,7 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee findByPhoneNumber(String phoneNumber) {
+    public Optional<Employee> findByPhoneNumber(String phoneNumber) {
         return employeeRepository.findByPhoneNumber(phoneNumber);
     }
 }

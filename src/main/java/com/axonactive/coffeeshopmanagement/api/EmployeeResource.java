@@ -7,7 +7,6 @@ import com.axonactive.coffeeshopmanagement.Service.dto.EmployeeDto;
 import com.axonactive.coffeeshopmanagement.Service.mapper.EmployeeMapper;
 import com.axonactive.coffeeshopmanagement.api.request.EmployeeRequest;
 import com.axonactive.coffeeshopmanagement.entities.Employee;
-import org.aspectj.weaver.ast.Not;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,29 +35,32 @@ public class EmployeeResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmployeeDto> findEmployeeById(@PathVariable(value = "id")String id) throws NotFoundException {
+    public ResponseEntity<EmployeeDto> findEmployeeById(@PathVariable(value = "id")String id,
+                                                        @PathVariable(value = "phoneNumber",required = false)String phoneNumber) throws NotFoundException {
+        if ( null == phoneNumber ){
         return ResponseEntity.ok(employeeMapper.toDto(employeeService.findEmployee(id)
-                .orElseThrow(() -> new NotFoundException("Employee not found: "+ id))));
+                .orElseThrow(() -> new NotFoundException("Employee not found: "+ id))));}
+        return ResponseEntity.ok(employeeMapper.toDto(employeeService.findByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new NotFoundException("Employee not found: "+phoneNumber))));
     }
 
     @PostMapping
     public ResponseEntity<EmployeeDto> add(@RequestBody EmployeeRequest requestEmployee) throws NotFoundException {
         Employee newEmployee = new Employee();
+        newEmployee.setAddress(requestEmployee.getAddress());
+        newEmployee.setGender(requestEmployee.getGender());
+        newEmployee.setCoffeeShop(coffeeShopService.findCoffeeShop(requestEmployee.getCoffeeShopId())
+                .orElseThrow(() -> new NotFoundException("CoffeeShop not found: "+requestEmployee.getCoffeeShopId())));
+        newEmployee.setIdentity(requestEmployee.getIdentity());
         newEmployee.setId(requestEmployee.getId());
+        newEmployee.setFirstName(requestEmployee.getFirstName());
         newEmployee.setLastName(requestEmployee.getLastName());
         newEmployee.setMiddleName(requestEmployee.getMiddleName());
-        newEmployee.setFirstName(requestEmployee.getFirstName());
-        newEmployee.setAddress(requestEmployee.getAddress());
         newEmployee.setPhoneNumber(requestEmployee.getPhoneNumber());
-        newEmployee.setIdentity(requestEmployee.getIdentity());
-        newEmployee.setDateOfBirth(requestEmployee.getDateOfBirth());
         newEmployee.setStartDate(requestEmployee.getStartDate());
-        newEmployee.setGender(requestEmployee.getGender());
-        newEmployee.setCoffeeShop(coffeeShopService.findByName(requestEmployee.getCoffeeShopName())
-                .orElseThrow(() -> new NotFoundException("CoffeeShop not found: "+requestEmployee.getCoffeeShopName())));
+        newEmployee.setDateOfBirth(requestEmployee.getDateOfBirth());
         Employee createEmployee = employeeService.createEmployee(newEmployee);
-        return ResponseEntity
-                .created(URI.create(EmployeeResource.PATH +"/"+ createEmployee.getId()))
+        return ResponseEntity.created(URI.create(EmployeeResource.PATH +"/"+createEmployee.getId()))
                 .body(employeeMapper.toDto(createEmployee));
     }
 
@@ -79,8 +81,8 @@ public class EmployeeResource {
         updateEmployee.setPhoneNumber(requestEmployee.getPhoneNumber());
         updateEmployee.setGender(requestEmployee.getGender());
         updateEmployee.setStartDate(requestEmployee.getStartDate());
-        updateEmployee.setCoffeeShop(coffeeShopService.findByName(requestEmployee.getCoffeeShopName())
-                .orElseThrow(() -> new NotFoundException("CoffeeShop not found: "+ requestEmployee.getCoffeeShopName())));
+        updateEmployee.setCoffeeShop(coffeeShopService.findCoffeeShop(requestEmployee.getCoffeeShopId())
+                .orElseThrow(() -> new NotFoundException("CoffeeShop not found: " + requestEmployee.getCoffeeShopId())));
         return ResponseEntity.ok(employeeMapper.toDto(employeeService.update(id,updateEmployee)));
     }
 }

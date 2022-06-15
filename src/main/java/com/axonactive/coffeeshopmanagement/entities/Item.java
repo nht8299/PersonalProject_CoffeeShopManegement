@@ -28,9 +28,6 @@ public class Item {
     @NotNull
     private Double price;
 
-    @NotNull
-    private Integer unitInStock;
-
     @Enumerated(EnumType.STRING)
     private ItemStatus status;
 

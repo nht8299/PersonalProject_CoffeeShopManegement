@@ -31,7 +31,7 @@ public class CustomerResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerDto> findCustomerById(@PathVariable(value = "id") Integer id, @PathVariable(value = "phoneNumber", required = false) String phoneNumber) throws NotFoundException {
+    public ResponseEntity<CustomerDto> findCustomerById(@PathVariable(value = "id") Integer id, @RequestParam(value = "phoneNumber", required = false) String phoneNumber) throws NotFoundException {
         if (null == phoneNumber) {
             return ResponseEntity.ok(customerMapper.toDto(customerService.findCustomer(id)
                     .orElseThrow(() -> new NotFoundException("Customer not found: " + id))));
@@ -66,4 +66,5 @@ public class CustomerResource {
         updateCustomer.setFeedBack(requestCustomer.getFeedBack());
         return ResponseEntity.ok(customerMapper.toDto(customerService.update(id, updateCustomer)));
     }
+
 }

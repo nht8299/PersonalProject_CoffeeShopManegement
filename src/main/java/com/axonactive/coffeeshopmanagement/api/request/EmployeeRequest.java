@@ -17,10 +17,10 @@ public class EmployeeRequest {
     private String middleName;
     private String firstName;
     private LocalDate dateOfBirth;
-    private String PhoneNumber;
+    private String phoneNumber;
     private Gender gender;
     private String address;
     private String identity;
     private LocalDate startDate;
-    private String coffeeShopName;
+    private Integer coffeeShopId;
 }

@@ -48,7 +48,6 @@ public class ItemResource {
         newItem.setStatus(requestItem.getStatus());
         newItem.setPrice(requestItem.getPrice());
         newItem.setCostRatePerUnit(requestItem.getCostRatePerUnit());
-        newItem.setUnitInStock(requestItem.getUnitInStock());
         newItem.setCategory(categoryService.findByName(requestItem.getName()));
         Item createItem = itemService.createItem(newItem);
         return ResponseEntity
@@ -70,7 +69,6 @@ public class ItemResource {
         updateItem.setStatus(requestItem.getStatus());
         updateItem.setPrice(requestItem.getPrice());
         updateItem.setCostRatePerUnit(requestItem.getCostRatePerUnit());
-        updateItem.setUnitInStock(requestItem.getUnitInStock());
         updateItem.setCategory(categoryService.findByName(requestItem.getName()));
         return ResponseEntity.ok(itemMapper.toDto(itemService.update(id,updateItem)));
     }
