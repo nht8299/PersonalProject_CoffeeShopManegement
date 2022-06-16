@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.List;
 
+
+@CrossOrigin(value = "3600")
 @RestController
 @RequestMapping(CategoryResource.PATH)
 public class CategoryResource {

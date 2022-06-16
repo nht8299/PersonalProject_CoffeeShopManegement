@@ -18,6 +18,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+@CrossOrigin(value = "3600")
 @RestController
 @RequestMapping(InvoiceResource.PATH)
 public class InvoiceResource {
