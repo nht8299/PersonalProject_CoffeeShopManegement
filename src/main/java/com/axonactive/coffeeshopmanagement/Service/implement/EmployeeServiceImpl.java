@@ -49,6 +49,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         updateEmployee.setFirstName(requestEmployee.getFirstName());
         updateEmployee.setMiddleName(requestEmployee.getMiddleName());
         updateEmployee.setLastName(requestEmployee.getLastName());
+        updateEmployee.setType(requestEmployee.getType());
+        updateEmployee.setRole(requestEmployee.getRole());
+        updateEmployee.setStatus(requestEmployee.getStatus());
         return employeeRepository.save(updateEmployee);
     }
 

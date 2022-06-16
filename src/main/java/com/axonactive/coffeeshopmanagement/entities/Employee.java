@@ -1,5 +1,7 @@
 package com.axonactive.coffeeshopmanagement.entities;
 
+import com.axonactive.coffeeshopmanagement.entities.enums.EmployeeRole;
+import com.axonactive.coffeeshopmanagement.entities.enums.EmployeeType;
 import com.axonactive.coffeeshopmanagement.entities.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,7 +49,19 @@ public class Employee {
 
     private LocalDate startDate;
 
+    @Enumerated(EnumType.STRING)
+    private EmployeeRole role;
+
+    @Enumerated(EnumType.STRING)
+    private EmployeeType type;
+
+    private boolean status;
+
     @ManyToOne
     @JoinColumn
     private CoffeeShop coffeeShop;
+
+    public boolean getStatus() {
+        return this.status;
+    }
 }

@@ -1,5 +1,7 @@
 package com.axonactive.coffeeshopmanagement.Service.dto;
 
+import com.axonactive.coffeeshopmanagement.entities.enums.EmployeeRole;
+import com.axonactive.coffeeshopmanagement.entities.enums.EmployeeType;
 import com.axonactive.coffeeshopmanagement.entities.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,5 +19,7 @@ public class EmployeeDto {
     private Gender gender;
     private String phoneNumber;
     private String address;
+    private EmployeeRole role;
+    private EmployeeType type;
     private String coffeeShopName;
 }

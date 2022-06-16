@@ -60,14 +60,21 @@ public class EmployeeResource {
         newEmployee.setPhoneNumber(requestEmployee.getPhoneNumber());
         newEmployee.setStartDate(requestEmployee.getStartDate());
         newEmployee.setDateOfBirth(requestEmployee.getDateOfBirth());
+        newEmployee.setRole(requestEmployee.getRole());
+        newEmployee.setType(requestEmployee.getType());
+        newEmployee.setStatus(requestEmployee.getStatus());
         Employee createEmployee = employeeService.createEmployee(newEmployee);
         return ResponseEntity.created(URI.create(EmployeeResource.PATH +"/"+createEmployee.getId()))
                 .body(employeeMapper.toDto(createEmployee));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id")String id){
-        employeeService.deleteEmployee(id);
+    public ResponseEntity<Void> delete(@PathVariable(value = "id")String id,@PathVariable(value = "phoneNumber",required = false)String phoneNumber) throws NotFoundException {
+        if (null == phoneNumber) {
+            employeeService.deleteEmployee(id);
+        }
+            employeeService.deleteEmployee(employeeService.findByPhoneNumber(phoneNumber)
+                    .orElseThrow(() -> new NotFoundException("Employee not found with phone number: "+phoneNumber)).getId());
         return ResponseEntity.noContent().build();
     }
 
@@ -82,6 +89,9 @@ public class EmployeeResource {
         updateEmployee.setPhoneNumber(requestEmployee.getPhoneNumber());
         updateEmployee.setGender(requestEmployee.getGender());
         updateEmployee.setStartDate(requestEmployee.getStartDate());
+        updateEmployee.setRole(requestEmployee.getRole());
+        updateEmployee.setType(requestEmployee.getType());
+        updateEmployee.setStatus(requestEmployee.getStatus());
         updateEmployee.setCoffeeShop(coffeeShopService.findCoffeeShop(requestEmployee.getCoffeeShopId())
                 .orElseThrow(() -> new NotFoundException("CoffeeShop not found: " + requestEmployee.getCoffeeShopId())));
         return ResponseEntity.ok(employeeMapper.toDto(employeeService.update(id,updateEmployee)));

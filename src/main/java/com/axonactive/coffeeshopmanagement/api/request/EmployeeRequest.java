@@ -1,5 +1,7 @@
 package com.axonactive.coffeeshopmanagement.api.request;
 
+import com.axonactive.coffeeshopmanagement.entities.enums.EmployeeRole;
+import com.axonactive.coffeeshopmanagement.entities.enums.EmployeeType;
 import com.axonactive.coffeeshopmanagement.entities.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,5 +24,8 @@ public class EmployeeRequest {
     private String address;
     private String identity;
     private LocalDate startDate;
+    private EmployeeRole role;
+    private EmployeeType type;
+    private Boolean status;
     private Integer coffeeShopId;
 }

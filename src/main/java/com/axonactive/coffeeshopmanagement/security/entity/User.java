@@ -1,5 +1,6 @@
 package com.axonactive.coffeeshopmanagement.security.entity;
 
+import com.axonactive.coffeeshopmanagement.entities.Employee;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,5 +29,9 @@ public class User {
 
     @OneToMany(mappedBy = "users")
     private List<UserRoleAssignment> roles = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn
+    private Employee employee;
 
 }

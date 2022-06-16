@@ -32,11 +32,14 @@ public class CustomerResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerDto> findCustomerById(@PathVariable(value = "id") Integer id, @RequestParam(value = "phoneNumber", required = false) String phoneNumber) throws NotFoundException {
+    public ResponseEntity<CustomerDto> findCustomerById(@PathVariable(value = "id") Integer id,
+                                                        @RequestParam(value = "phoneNumber", required = false) String phoneNumber) throws NotFoundException {
         if (null == phoneNumber) {
             return ResponseEntity.ok(customerMapper.toDto(customerService.findCustomer(id)
                     .orElseThrow(() -> new NotFoundException("Customer not found: " + id))));
-        }return ResponseEntity.ok((customerMapper.toDto(customerService.findByPhoneNumber(phoneNumber).orElseThrow(() -> new NotFoundException("Customer not found: "+phoneNumber)))));
+        }
+        return ResponseEntity.ok((customerMapper.toDto(customerService.findByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new NotFoundException("Customer not found: " + phoneNumber)))));
     }
 
     @PostMapping
@@ -59,7 +62,8 @@ public class CustomerResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDto> update(@PathVariable(value = "id") Integer id, @RequestBody CustomerRequest requestCustomer) throws NotFoundException {
+    public ResponseEntity<CustomerDto> update(@PathVariable(value = "id") Integer id,
+                                              @RequestBody CustomerRequest requestCustomer) throws NotFoundException {
         Customer updateCustomer = new Customer();
         updateCustomer.setFullName(requestCustomer.getFullName());
         updateCustomer.setPhoneNumber(requestCustomer.getPhoneNumber());
