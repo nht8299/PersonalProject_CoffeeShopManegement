@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InvoiceDetailRequest {
 
-    private Integer invoiceId;
-    private String itemName;
+    private String itemId;
     private Integer quantity;
     private Double discount;
 }

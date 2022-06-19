@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,5 +17,6 @@ public class InvoiceRequest {
     private PaymentMethod paymentMethod;
     private String customerPhoneNumber;
     private String employeeId;
+    private List<InvoiceDetailRequest> invoiceDetailRequestList;
 
 }

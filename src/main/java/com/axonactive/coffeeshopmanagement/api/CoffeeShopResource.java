@@ -1,6 +1,6 @@
 package com.axonactive.coffeeshopmanagement.api;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.Service.CoffeeShopService;
 import com.axonactive.coffeeshopmanagement.Service.dto.CoffeeShopDto;
 import com.axonactive.coffeeshopmanagement.Service.mapper.CoffeeShopMapper;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping(CoffeeShopResource.PATH)
 public class CoffeeShopResource {
 
-    public static final String PATH = "/api/coffeeshop";
+    public static final String PATH = "/api/coffee_shops";
 
     @Autowired
     CoffeeShopService coffeeShopService;
@@ -32,27 +32,21 @@ public class CoffeeShopResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CoffeeShopDto> findCoffeeShopById(@PathVariable(value = "id") Integer id, @RequestParam(value = "name", required = false) String name) throws NotFoundException {
+    public ResponseEntity<CoffeeShopDto> findCoffeeShopById(@PathVariable(value = "id") Integer id, @RequestParam(value = "name", required = false) String name) throws ResourceNotFoundException {
         if (name == null) {
             return ResponseEntity.ok(coffeeShopMapper.toDto(coffeeShopService.findCoffeeShop(id)
-                    .orElseThrow(() -> new NotFoundException("CoffeeShop not found: " + id))));
+                    .orElseThrow(() -> new ResourceNotFoundException("CoffeeShop not found: " + id))));
         }  return ResponseEntity.ok(coffeeShopMapper.toDto(coffeeShopService.findByName(name)
-                .orElseThrow(() -> new NotFoundException("CoffeeShop not found: "+name))));
+                .orElseThrow(() -> new ResourceNotFoundException("CoffeeShop not found: "+name))));
     }
 
 
     @PostMapping
-    public ResponseEntity<CoffeeShopDto> add(@RequestBody CoffeeShop requestCoffeeShop) {
-        CoffeeShop newCoffeeShop = new CoffeeShop();
-        newCoffeeShop.setName(requestCoffeeShop.getName());
-        newCoffeeShop.setAddress(requestCoffeeShop.getAddress());
-        newCoffeeShop.setHomepage(requestCoffeeShop.getHomepage());
-        newCoffeeShop.setLocation(requestCoffeeShop.getLocation());
-        newCoffeeShop.setPhoneNumber(requestCoffeeShop.getPhoneNumber());
-        CoffeeShop createCoffeeShop = coffeeShopService.createCoffeeShop(newCoffeeShop);
+    public ResponseEntity<CoffeeShopDto> add(@RequestBody CoffeeShopRequest requestCoffeeShop) {
+        CoffeeShop newCoffeeShop = coffeeShopService.createCoffeeShop(requestCoffeeShop);
         return ResponseEntity
-                .created(URI.create(CoffeeShopResource.PATH + "/" + createCoffeeShop.getId()))
-                .body(coffeeShopMapper.toDto(createCoffeeShop));
+                .created(URI.create(CoffeeShopResource.PATH + "/" + newCoffeeShop.getId()))
+                .body(coffeeShopMapper.toDto(newCoffeeShop));
     }
 
     @DeleteMapping("{id}")
@@ -62,13 +56,7 @@ public class CoffeeShopResource {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<CoffeeShopDto> update(@PathVariable(value = "id") Integer id, @RequestBody CoffeeShopRequest requestCoffeeShop) throws NotFoundException {
-        CoffeeShop updateCoffeeShop = new CoffeeShop();
-        updateCoffeeShop.setName(requestCoffeeShop.getName());
-        updateCoffeeShop.setAddress(requestCoffeeShop.getAddress());
-        updateCoffeeShop.setHomepage(requestCoffeeShop.getHomepage());
-        updateCoffeeShop.setLocation(requestCoffeeShop.getLocation());
-        updateCoffeeShop.setPhoneNumber(requestCoffeeShop.getPhoneNumber());
-        return ResponseEntity.ok(coffeeShopMapper.toDto(coffeeShopService.update(id, updateCoffeeShop)));
+    public ResponseEntity<CoffeeShopDto> update(@PathVariable(value = "id") Integer id, @RequestBody CoffeeShopRequest requestCoffeeShop) throws ResourceNotFoundException {
+        return ResponseEntity.ok(coffeeShopMapper.toDto(coffeeShopService.update(id, requestCoffeeShop)));
     }
 }

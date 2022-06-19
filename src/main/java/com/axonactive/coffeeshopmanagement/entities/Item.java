@@ -23,9 +23,6 @@ public class Item {
     private String name;
 
     @NotNull
-    private Double costRatePerUnit;
-
-    @NotNull
     private Double price;
 
     @Enumerated(EnumType.STRING)

@@ -1,9 +1,10 @@
 package com.axonactive.coffeeshopmanagement.api;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.Service.CategoryService;
 import com.axonactive.coffeeshopmanagement.Service.dto.CategoryDto;
 import com.axonactive.coffeeshopmanagement.Service.mapper.CategoryMapper;
+import com.axonactive.coffeeshopmanagement.api.request.CategoryRequest;
 import com.axonactive.coffeeshopmanagement.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ import java.util.List;
 @RequestMapping(CategoryResource.PATH)
 public class CategoryResource {
 
-    public static final String PATH = "/api/category";
+    public static final String PATH = "/api/categories";
 
     @Autowired
     CategoryService categoryService;
@@ -32,20 +33,17 @@ public class CategoryResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryDto> findCategoryById(@PathVariable(value = "id")Integer id)throws NotFoundException{
+    public ResponseEntity<CategoryDto> findCategoryById(@PathVariable(value = "id")Integer id)throws ResourceNotFoundException {
         return ResponseEntity.ok(categoryMapper.toDto(categoryService.findCategory(id)
-                .orElseThrow(() -> new NotFoundException("Category not found "+ id))));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found "+ id))));
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDto> add(@RequestBody Category category){
-        Category newCategory =new Category();
-        newCategory.setName(category.getName());
-        newCategory.setDescription(category.getDescription());
-        Category createCategory = categoryService.saveCategory(newCategory);
+    public ResponseEntity<CategoryDto> add(@RequestBody CategoryRequest category){
+        Category newCategory = categoryService.saveCategory(category);
         return ResponseEntity
-                .created(URI.create(CategoryResource.PATH + "/" + createCategory.getId()))
-                .body(categoryMapper.toDto(createCategory));
+                .created(URI.create(CategoryResource.PATH + "/" + newCategory.getId()))
+                .body(categoryMapper.toDto(newCategory));
     }
 
     @DeleteMapping("/{id}")
@@ -55,10 +53,7 @@ public class CategoryResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryDto> update(@PathVariable(value = "id")Integer id,@RequestBody Category requestCategory) throws NotFoundException {
-        Category updateCategory = new Category();
-        updateCategory.setName(requestCategory.getName());
-        updateCategory.setDescription(requestCategory.getDescription());
-        return ResponseEntity.ok(categoryMapper.toDto(categoryService.updateCategory(id,updateCategory)));
+    public ResponseEntity<CategoryDto> update(@PathVariable(value = "id")Integer id,@RequestBody CategoryRequest requestCategory) throws ResourceNotFoundException {
+        return ResponseEntity.ok(categoryMapper.toDto(categoryService.updateCategory(id,requestCategory)));
     }
 }

@@ -8,10 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReceiptsAndPaymentRequest {
+public class ReceiptsAndPaymentsRequest {
 
     private ReceiptsOrPayments type;
     private Double amount;
     private String content;
     private String description;
+    private String EmployeeId;
 }

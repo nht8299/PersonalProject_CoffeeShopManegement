@@ -12,8 +12,7 @@ public class ItemRequest {
 
     private String id;
     private String name;
-    private Double costRatePerUnit;
     private Double price;
     private ItemStatus status;
-    private String categoryName;
+    private Integer categoryId;
 }

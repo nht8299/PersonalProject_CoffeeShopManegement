@@ -1,5 +1,6 @@
 package com.axonactive.coffeeshopmanagement.Service.dto;
 
+import com.axonactive.coffeeshopmanagement.entities.InvoiceDetail;
 import com.axonactive.coffeeshopmanagement.entities.enums.PaymentMethod;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,5 +25,5 @@ public class InvoiceDto {
     private String customerName;
     private String customerPhoneNumber;
     private String employeeFullName;
-    private List<InvoiceDetailDto> orderDetailDtos;
+    private List<InvoiceDetail> invoiceDetails;
 }

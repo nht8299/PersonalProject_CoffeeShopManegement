@@ -1,6 +1,6 @@
 package com.axonactive.coffeeshopmanagement.api;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.Service.CustomerService;
 import com.axonactive.coffeeshopmanagement.Service.dto.CustomerDto;
 import com.axonactive.coffeeshopmanagement.Service.mapper.CustomerMapper;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping(CustomerResource.PATH)
 public class CustomerResource {
 
-    public static final String PATH = "/api/customer";
+    public static final String PATH = "/api/customers";
 
     @Autowired
     CustomerService customerService;
@@ -33,23 +33,18 @@ public class CustomerResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDto> findCustomerById(@PathVariable(value = "id") Integer id,
-                                                        @RequestParam(value = "phoneNumber", required = false) String phoneNumber) throws NotFoundException {
+                                                        @RequestParam(value = "phoneNumber", required = false) String phoneNumber) throws ResourceNotFoundException {
         if (null == phoneNumber) {
             return ResponseEntity.ok(customerMapper.toDto(customerService.findCustomer(id)
-                    .orElseThrow(() -> new NotFoundException("Customer not found: " + id))));
+                    .orElseThrow(() -> new ResourceNotFoundException("Customer not found: " + id))));
         }
         return ResponseEntity.ok((customerMapper.toDto(customerService.findByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new NotFoundException("Customer not found: " + phoneNumber)))));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found: " + phoneNumber)))));
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDto> add(@RequestBody Customer requestCustomer) {
-        Customer newCustomer = new Customer();
-        newCustomer.setFullName(requestCustomer.getFullName());
-        newCustomer.setAddress(requestCustomer.getAddress());
-        newCustomer.setPhoneNumber(requestCustomer.getPhoneNumber());
-        newCustomer.setFeedBack(requestCustomer.getFeedBack());
-        Customer createCustomer = customerService.createCustomer(newCustomer);
+    public ResponseEntity<CustomerDto> add(@RequestBody CustomerRequest requestCustomer) {
+        Customer createCustomer = customerService.createCustomer(requestCustomer);
         return ResponseEntity
                 .created(URI.create(CustomerResource.PATH + "/" + createCustomer.getId()))
                 .body(customerMapper.toDto(createCustomer));
@@ -63,13 +58,8 @@ public class CustomerResource {
 
     @PutMapping("/{id}")
     public ResponseEntity<CustomerDto> update(@PathVariable(value = "id") Integer id,
-                                              @RequestBody CustomerRequest requestCustomer) throws NotFoundException {
-        Customer updateCustomer = new Customer();
-        updateCustomer.setFullName(requestCustomer.getFullName());
-        updateCustomer.setPhoneNumber(requestCustomer.getPhoneNumber());
-        updateCustomer.setAddress(requestCustomer.getAddress());
-        updateCustomer.setFeedBack(requestCustomer.getFeedBack());
-        return ResponseEntity.ok(customerMapper.toDto(customerService.update(id, updateCustomer)));
+                                              @RequestBody CustomerRequest requestCustomer) throws ResourceNotFoundException {
+        return ResponseEntity.ok(customerMapper.toDto(customerService.update(id, requestCustomer)));
     }
 
 }

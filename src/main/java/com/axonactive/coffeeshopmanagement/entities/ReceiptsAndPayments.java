@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -18,6 +20,12 @@ public class ReceiptsAndPayments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotNull
+    private LocalDate date;
+
+    @NotNull
+    private LocalTime time;
 
     @Enumerated(EnumType.STRING)
     private ReceiptsOrPayments Type;

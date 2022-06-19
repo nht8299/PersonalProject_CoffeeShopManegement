@@ -1,7 +1,9 @@
 package com.axonactive.coffeeshopmanagement.Service.implement;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
+import com.axonactive.coffeeshopmanagement.Service.CategoryService;
 import com.axonactive.coffeeshopmanagement.Service.ItemService;
+import com.axonactive.coffeeshopmanagement.api.request.ItemRequest;
 import com.axonactive.coffeeshopmanagement.entities.Item;
 import com.axonactive.coffeeshopmanagement.repositories.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +18,23 @@ public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
 
+    private final CategoryService categoryService;
+
     @Override
     public List<Item> getAll() {
         return itemRepository.findAll();
     }
 
     @Override
-    public Item createItem(Item item) {
-        return itemRepository.save(item);
+    public Item createItem(ItemRequest requestItem) throws ResourceNotFoundException {
+        Item newItem = new Item();
+        newItem.setId(requestItem.getId());
+        newItem.setName(requestItem.getName());
+        newItem.setStatus(requestItem.getStatus());
+        newItem.setPrice(requestItem.getPrice());
+        newItem.setCategory(categoryService.findCategory(requestItem.getCategoryId())
+                .orElseThrow( () -> new ResourceNotFoundException("Category not found with id: "+requestItem.getCategoryId())));
+        return itemRepository.save(newItem);
     }
 
     @Override
@@ -42,14 +53,15 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item update(String id, Item updateItem) throws NotFoundException {
-         Item item = itemRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Item not found: "+ id));
-         item.setCategory(updateItem.getCategory());
-         item.setName(updateItem.getName());
-         item.setPrice(updateItem.getPrice());
-         item.setStatus(updateItem.getStatus());
-         item.setCostRatePerUnit(updateItem.getCostRatePerUnit());
-        return itemRepository.save(item);
+    public Item update(String id, ItemRequest requestItem) throws ResourceNotFoundException {
+         Item updateItem = itemRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Item not found: "+ id));
+        updateItem.setId(requestItem.getId());
+        updateItem.setName(requestItem.getName());
+        updateItem.setStatus(requestItem.getStatus());
+        updateItem.setPrice(requestItem.getPrice());
+        updateItem.setCategory(categoryService.findCategory(requestItem.getCategoryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: "+requestItem.getCategoryId())));
+        return itemRepository.save(updateItem);
     }
 }

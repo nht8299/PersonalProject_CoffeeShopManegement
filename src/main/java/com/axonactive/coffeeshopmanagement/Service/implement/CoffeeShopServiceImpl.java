@@ -1,7 +1,8 @@
 package com.axonactive.coffeeshopmanagement.Service.implement;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.Service.CoffeeShopService;
+import com.axonactive.coffeeshopmanagement.api.request.CoffeeShopRequest;
 import com.axonactive.coffeeshopmanagement.entities.CoffeeShop;
 import com.axonactive.coffeeshopmanagement.repositories.CoffeeShopRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,14 @@ public class CoffeeShopServiceImpl implements CoffeeShopService {
     }
 
     @Override
-    public CoffeeShop createCoffeeShop(CoffeeShop coffeeShop) {
-        return coffeeShopRepository.save(coffeeShop);
+    public CoffeeShop createCoffeeShop(CoffeeShopRequest requestCoffeeShop) {
+        CoffeeShop newCoffeeShop = new CoffeeShop();
+        newCoffeeShop.setName(requestCoffeeShop.getName());
+        newCoffeeShop.setAddress(requestCoffeeShop.getAddress());
+        newCoffeeShop.setHomepage(requestCoffeeShop.getHomepage());
+        newCoffeeShop.setLocation(requestCoffeeShop.getLocation());
+        newCoffeeShop.setPhoneNumber(requestCoffeeShop.getPhoneNumber());
+        return coffeeShopRepository.save(newCoffeeShop);
     }
 
     @Override
@@ -37,14 +44,14 @@ public class CoffeeShopServiceImpl implements CoffeeShopService {
     }
 
     @Override
-    public CoffeeShop update(Integer id, CoffeeShop coffeeShopDetail) throws NotFoundException {
+    public CoffeeShop update(Integer id, CoffeeShopRequest requestCoffeeShop) throws ResourceNotFoundException {
         CoffeeShop updateCoffeeShop = coffeeShopRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("CoffeeShop Not Found: " + id));
-        updateCoffeeShop.setName(coffeeShopDetail.getName());
-        updateCoffeeShop.setLocation(coffeeShopDetail.getLocation());
-        updateCoffeeShop.setPhoneNumber(coffeeShopDetail.getPhoneNumber());
-        updateCoffeeShop.setHomepage(coffeeShopDetail.getHomepage());
-        updateCoffeeShop.setAddress(coffeeShopDetail.getAddress());
+                .orElseThrow(() -> new ResourceNotFoundException("CoffeeShop Not Found: " + id));
+        updateCoffeeShop.setName(requestCoffeeShop.getName());
+        updateCoffeeShop.setAddress(requestCoffeeShop.getAddress());
+        updateCoffeeShop.setHomepage(requestCoffeeShop.getHomepage());
+        updateCoffeeShop.setLocation(requestCoffeeShop.getLocation());
+        updateCoffeeShop.setPhoneNumber(requestCoffeeShop.getPhoneNumber());
         return coffeeShopRepository.save(updateCoffeeShop);
     }
 

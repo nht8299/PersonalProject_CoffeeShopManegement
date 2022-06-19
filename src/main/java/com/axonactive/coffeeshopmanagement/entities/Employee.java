@@ -35,6 +35,7 @@ public class Employee {
     private LocalDate dateOfBirth;
 
     @NotNull
+    @Column(unique = true)
     private String phoneNumber;
 
     @NotNull

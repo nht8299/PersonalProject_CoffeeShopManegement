@@ -1,20 +1,24 @@
 package com.axonactive.coffeeshopmanagement.Service;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
+import com.axonactive.coffeeshopmanagement.api.request.InvoiceDetailRequest;
 import com.axonactive.coffeeshopmanagement.entities.InvoiceDetail;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface InvoiceDetailService {
 
     List<InvoiceDetail> getAll();
 
-    InvoiceDetail createInvoiceDetail(InvoiceDetail orderDetail);
+    InvoiceDetail createInvoiceDetail(Integer invoiceId, InvoiceDetailRequest requestInvoiceDetail) throws ResourceNotFoundException;
 
-    Optional<InvoiceDetail> findInvoiceDetail(Integer id);
+    InvoiceDetail findInvoiceDetail(Integer id) throws ResourceNotFoundException;
 
-    void deleteOrderDetail(Integer id);
+    void deleteInvoiceDetails(Integer id) throws ResourceNotFoundException;
 
-    InvoiceDetail update(Integer id, InvoiceDetail updateInvoiceDetail) throws NotFoundException;
+    void deleteByInvoiceId(Integer id);
+
+    InvoiceDetail update(Integer id, InvoiceDetailRequest RequestInvoiceDetail) throws ResourceNotFoundException;
+
+    List<InvoiceDetail> findByInvoiceId(Integer id) throws ResourceNotFoundException;
 }

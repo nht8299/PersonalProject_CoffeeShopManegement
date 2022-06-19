@@ -1,6 +1,7 @@
 package com.axonactive.coffeeshopmanagement.Service;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
+import com.axonactive.coffeeshopmanagement.api.request.CoffeeShopRequest;
 import com.axonactive.coffeeshopmanagement.entities.CoffeeShop;
 
 import java.util.List;
@@ -10,13 +11,13 @@ public interface CoffeeShopService {
 
     List<CoffeeShop> getAll();
 
-    CoffeeShop createCoffeeShop(CoffeeShop coffeeShop);
+    CoffeeShop createCoffeeShop(CoffeeShopRequest requestCoffeeShop);
 
     Optional<CoffeeShop> findCoffeeShop(Integer id);
 
     void deleteCoffeeShop(Integer id);
 
-    CoffeeShop update(Integer id,CoffeeShop coffeeShopDetail) throws NotFoundException;
+    CoffeeShop update(Integer id,CoffeeShopRequest coffeeShopDetail) throws ResourceNotFoundException;
 
     Optional<CoffeeShop> findByName (String name);
 }

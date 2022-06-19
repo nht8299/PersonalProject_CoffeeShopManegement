@@ -1,7 +1,7 @@
 package com.axonactive.coffeeshopmanagement.Service;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
-import com.axonactive.coffeeshopmanagement.Service.dto.ReceiptsAndPaymentsDto;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
+import com.axonactive.coffeeshopmanagement.api.request.ReceiptsAndPaymentsRequest;
 import com.axonactive.coffeeshopmanagement.entities.ReceiptsAndPayments;
 
 import java.util.List;
@@ -11,11 +11,11 @@ public interface ReceiptsAndPaymentsService {
 
     List<ReceiptsAndPayments> getAll();
 
-    ReceiptsAndPayments create(ReceiptsAndPayments receiptsAndPayments);
+    ReceiptsAndPayments createReceiptsAndPayments(ReceiptsAndPaymentsRequest requestReceiptsAndPayments) throws ResourceNotFoundException;
 
     Optional<ReceiptsAndPayments> findById(Integer id);
 
     void deleteById(Integer id);
 
-    ReceiptsAndPayments update (Integer id,ReceiptsAndPayments receiptsAndPayments) throws NotFoundException;
+    ReceiptsAndPayments update (Integer id,ReceiptsAndPaymentsRequest receiptsAndPayments) throws ResourceNotFoundException;
 }

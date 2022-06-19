@@ -26,6 +26,7 @@ public class Customer {
     private String address;
 
     @NotNull
+    @Column(unique = true)
     private String phoneNumber;
 
     private String feedBack;

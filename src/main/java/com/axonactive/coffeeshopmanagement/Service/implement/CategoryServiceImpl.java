@@ -1,7 +1,8 @@
 package com.axonactive.coffeeshopmanagement.Service.implement;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.Service.CategoryService;
+import com.axonactive.coffeeshopmanagement.api.request.CategoryRequest;
 import com.axonactive.coffeeshopmanagement.entities.Category;
 import com.axonactive.coffeeshopmanagement.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category saveCategory(Category category) {
-        return categoryRepository.save(category);
+    public Category saveCategory(CategoryRequest requestCategory) {
+        Category newCategory =new Category();
+        newCategory.setName(requestCategory.getName());
+        newCategory.setDescription(requestCategory.getDescription());
+        return categoryRepository.save(newCategory);
     }
 
     @Override
@@ -37,9 +41,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category updateCategory(Integer id, Category categoryDetail) throws NotFoundException {
+    public Category updateCategory(Integer id, CategoryRequest categoryDetail) throws ResourceNotFoundException {
         Category updateCategory = categoryRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Category Not Found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Category Not Found: " + id));
         updateCategory.setName(categoryDetail.getName());
         updateCategory.setDescription(categoryDetail.getDescription());
         return categoryRepository.save(updateCategory);

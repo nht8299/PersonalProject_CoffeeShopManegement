@@ -1,7 +1,8 @@
 package com.axonactive.coffeeshopmanagement.Service.implement;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.Service.CustomerService;
+import com.axonactive.coffeeshopmanagement.api.request.CustomerRequest;
 import com.axonactive.coffeeshopmanagement.entities.Customer;
 import com.axonactive.coffeeshopmanagement.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer createCustomer(Customer customer) {
-        return customerRepository.save(customer);
+    public Customer createCustomer(CustomerRequest requestCustomer) {
+        Customer newCustomer = new Customer();
+        newCustomer.setFullName(requestCustomer.getFullName());
+        newCustomer.setAddress(requestCustomer.getAddress());
+        newCustomer.setPhoneNumber(requestCustomer.getPhoneNumber());
+        newCustomer.setFeedBack(requestCustomer.getFeedBack());
+        return customerRepository.save(newCustomer);
     }
 
     @Override
@@ -37,13 +43,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer update(Integer id, Customer customerDetails) throws NotFoundException {
+    public Customer update(Integer id, CustomerRequest requestCustomer) throws ResourceNotFoundException {
         Customer updateCustomer = customerRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Customer not found: "+ id));
-        updateCustomer.setFullName(customerDetails.getFullName());
-        updateCustomer.setPhoneNumber(customerDetails.getPhoneNumber());
-        updateCustomer.setAddress(customerDetails.getAddress());
-        updateCustomer.setFeedBack(customerDetails.getFeedBack());
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found: "+ id));
+        updateCustomer.setFullName(requestCustomer.getFullName());
+        updateCustomer.setPhoneNumber(requestCustomer.getPhoneNumber());
+        updateCustomer.setAddress(requestCustomer.getAddress());
+        updateCustomer.setFeedBack(requestCustomer.getFeedBack());
         return customerRepository.save(updateCustomer);
     }
 

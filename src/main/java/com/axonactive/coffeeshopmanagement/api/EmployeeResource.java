@@ -1,6 +1,6 @@
 package com.axonactive.coffeeshopmanagement.api;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.Service.CoffeeShopService;
 import com.axonactive.coffeeshopmanagement.Service.EmployeeService;
 import com.axonactive.coffeeshopmanagement.Service.dto.EmployeeDto;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping(EmployeeResource.PATH)
 public class EmployeeResource {
 
-    public static final String PATH="/api/employee";
+    public static final String PATH="/api/employees";
 
     @Autowired
     EmployeeService employeeService;
@@ -37,63 +37,35 @@ public class EmployeeResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<EmployeeDto> findEmployeeById(@PathVariable(value = "id")String id,
-                                                        @PathVariable(value = "phoneNumber",required = false)String phoneNumber) throws NotFoundException {
+                                                        @PathVariable(value = "phoneNumber",required = false)String phoneNumber) throws ResourceNotFoundException {
         if ( null == phoneNumber ){
         return ResponseEntity.ok(employeeMapper.toDto(employeeService.findEmployee(id)
-                .orElseThrow(() -> new NotFoundException("Employee not found: "+ id))));}
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found: "+ id))));}
         return ResponseEntity.ok(employeeMapper.toDto(employeeService.findByPhoneNumber(phoneNumber)
-                .orElseThrow(() -> new NotFoundException("Employee not found: "+phoneNumber))));
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found: "+phoneNumber))));
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeDto> add(@RequestBody EmployeeRequest requestEmployee) throws NotFoundException {
-        Employee newEmployee = new Employee();
-        newEmployee.setAddress(requestEmployee.getAddress());
-        newEmployee.setGender(requestEmployee.getGender());
-        newEmployee.setCoffeeShop(coffeeShopService.findCoffeeShop(requestEmployee.getCoffeeShopId())
-                .orElseThrow(() -> new NotFoundException("CoffeeShop not found: "+requestEmployee.getCoffeeShopId())));
-        newEmployee.setIdentity(requestEmployee.getIdentity());
-        newEmployee.setId(requestEmployee.getId());
-        newEmployee.setFirstName(requestEmployee.getFirstName());
-        newEmployee.setLastName(requestEmployee.getLastName());
-        newEmployee.setMiddleName(requestEmployee.getMiddleName());
-        newEmployee.setPhoneNumber(requestEmployee.getPhoneNumber());
-        newEmployee.setStartDate(requestEmployee.getStartDate());
-        newEmployee.setDateOfBirth(requestEmployee.getDateOfBirth());
-        newEmployee.setRole(requestEmployee.getRole());
-        newEmployee.setType(requestEmployee.getType());
-        newEmployee.setStatus(requestEmployee.getStatus());
-        Employee createEmployee = employeeService.createEmployee(newEmployee);
+    public ResponseEntity<EmployeeDto> add(@RequestBody EmployeeRequest requestEmployee) throws ResourceNotFoundException {
+
+        Employee createEmployee = employeeService.createEmployee(requestEmployee);
         return ResponseEntity.created(URI.create(EmployeeResource.PATH +"/"+createEmployee.getId()))
                 .body(employeeMapper.toDto(createEmployee));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable(value = "id")String id,@PathVariable(value = "phoneNumber",required = false)String phoneNumber) throws NotFoundException {
+    public ResponseEntity<Void> delete(@PathVariable(value = "id")String id,@PathVariable(value = "phoneNumber",required = false)String phoneNumber) throws ResourceNotFoundException {
         if (null == phoneNumber) {
             employeeService.deleteEmployee(id);
-        }
+        }else {
             employeeService.deleteEmployee(employeeService.findByPhoneNumber(phoneNumber)
-                    .orElseThrow(() -> new NotFoundException("Employee not found with phone number: "+phoneNumber)).getId());
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found with phone number: " + phoneNumber)).getId());
+        }
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmployeeDto> update(@PathVariable(value = "id")String id,@RequestBody EmployeeRequest requestEmployee) throws NotFoundException {
-        Employee updateEmployee = new Employee();
-        updateEmployee.setMiddleName(requestEmployee.getMiddleName());
-        updateEmployee.setLastName(requestEmployee.getLastName());
-        updateEmployee.setFirstName(requestEmployee.getFirstName());
-        updateEmployee.setAddress(requestEmployee.getAddress());
-        updateEmployee.setIdentity(requestEmployee.getIdentity());
-        updateEmployee.setPhoneNumber(requestEmployee.getPhoneNumber());
-        updateEmployee.setGender(requestEmployee.getGender());
-        updateEmployee.setStartDate(requestEmployee.getStartDate());
-        updateEmployee.setRole(requestEmployee.getRole());
-        updateEmployee.setType(requestEmployee.getType());
-        updateEmployee.setStatus(requestEmployee.getStatus());
-        updateEmployee.setCoffeeShop(coffeeShopService.findCoffeeShop(requestEmployee.getCoffeeShopId())
-                .orElseThrow(() -> new NotFoundException("CoffeeShop not found: " + requestEmployee.getCoffeeShopId())));
-        return ResponseEntity.ok(employeeMapper.toDto(employeeService.update(id,updateEmployee)));
+    public ResponseEntity<EmployeeDto> update(@PathVariable(value = "id")String id,@RequestBody EmployeeRequest requestEmployee) throws ResourceNotFoundException {
+        return ResponseEntity.ok(employeeMapper.toDto(employeeService.update(id,requestEmployee)));
     }
 }

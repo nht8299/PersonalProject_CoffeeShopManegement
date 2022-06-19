@@ -1,6 +1,6 @@
 package com.axonactive.coffeeshopmanagement.api;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.Service.CategoryService;
 import com.axonactive.coffeeshopmanagement.Service.ItemService;
 import com.axonactive.coffeeshopmanagement.Service.dto.ItemDto;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping(ItemResource.PATH)
 public class ItemResource {
 
-    public static final String PATH = "/api/item";
+    public static final String PATH = "/api/items";
 
     @Autowired
     ItemService itemService;
@@ -27,8 +27,6 @@ public class ItemResource {
     @Autowired
     ItemMapper itemMapper;
 
-    @Autowired
-    CategoryService categoryService;
 
     @GetMapping
     public ResponseEntity<List<ItemDto>> getAll(){
@@ -36,21 +34,14 @@ public class ItemResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ItemDto> findItemById(@PathVariable(value = "id")String id) throws NotFoundException {
+    public ResponseEntity<ItemDto> findItemById(@PathVariable(value = "id")String id) throws ResourceNotFoundException {
         return ResponseEntity.ok(itemMapper.toDto(itemService.findItem(id)
-                .orElseThrow( () -> new NotFoundException("Item not found: "+ id))));
+                .orElseThrow( () -> new ResourceNotFoundException("Item not found: "+ id))));
     }
 
     @PostMapping
-    public ResponseEntity<ItemDto> add(@RequestBody ItemRequest requestItem){
-        Item newItem = new Item();
-        newItem.setId(requestItem.getId());
-        newItem.setName(requestItem.getName());
-        newItem.setStatus(requestItem.getStatus());
-        newItem.setPrice(requestItem.getPrice());
-        newItem.setCostRatePerUnit(requestItem.getCostRatePerUnit());
-        newItem.setCategory(categoryService.findByName(requestItem.getName()));
-        Item createItem = itemService.createItem(newItem);
+    public ResponseEntity<ItemDto> add(@RequestBody ItemRequest requestItem) throws ResourceNotFoundException {
+        Item createItem = itemService.createItem(requestItem);
         return ResponseEntity
                 .created(URI.create(ItemResource.PATH +"/" + createItem.getId()))
                 .body(itemMapper.toDto(createItem));
@@ -63,14 +54,7 @@ public class ItemResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ItemDto> update(@PathVariable(value = "id")String id,@RequestBody ItemRequest requestItem) throws NotFoundException {
-        Item updateItem = new Item();
-        updateItem.setId(requestItem.getId());
-        updateItem.setName(requestItem.getName());
-        updateItem.setStatus(requestItem.getStatus());
-        updateItem.setPrice(requestItem.getPrice());
-        updateItem.setCostRatePerUnit(requestItem.getCostRatePerUnit());
-        updateItem.setCategory(categoryService.findByName(requestItem.getName()));
-        return ResponseEntity.ok(itemMapper.toDto(itemService.update(id,updateItem)));
+    public ResponseEntity<ItemDto> update(@PathVariable(value = "id")String id,@RequestBody ItemRequest requestItem) throws ResourceNotFoundException {
+        return ResponseEntity.ok(itemMapper.toDto(itemService.update(id,requestItem)));
     }
 }

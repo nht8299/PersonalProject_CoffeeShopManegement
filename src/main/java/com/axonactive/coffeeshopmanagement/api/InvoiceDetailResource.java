@@ -1,6 +1,6 @@
 package com.axonactive.coffeeshopmanagement.api;
 
-import com.axonactive.coffeeshopmanagement.Exception.NotFoundException;
+import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.Service.InvoiceDetailService;
 import com.axonactive.coffeeshopmanagement.Service.InvoiceService;
 import com.axonactive.coffeeshopmanagement.Service.ItemService;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping(InvoiceDetailResource.PATH)
 public class InvoiceDetailResource {
 
-    public static final String PATH = "/api/invoicedetail";
+    public static final String PATH = "/api/invoice_details";
 
     @Autowired
     InvoiceDetailService invoiceDetailService;
@@ -28,51 +28,18 @@ public class InvoiceDetailResource {
     @Autowired
     InvoiceDetailMapper invoiceDetailMapper;
 
-    @Autowired
-    ItemService itemService;
-
-    @Autowired
-    InvoiceService invoiceService;
-
     @GetMapping
-    public ResponseEntity<List<InvoiceDetailDto>> getAll(){
+    public ResponseEntity<List<InvoiceDetailDto>>findAll(){
         return ResponseEntity.ok(invoiceDetailMapper.toDtos(invoiceDetailService.getAll()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<InvoiceDetailDto> findInvoiceDetailById(@PathVariable(value = "id")Integer id) throws NotFoundException {
-        return ResponseEntity.ok(invoiceDetailMapper.toDto(invoiceDetailService.findInvoiceDetail(id)
-                .orElseThrow(() -> new NotFoundException("Invoice detail not found: " + id))));
-    }
-
-    @PostMapping
-    public ResponseEntity<InvoiceDetailDto> add(@RequestBody InvoiceDetailRequest requestInvoiceDetails) throws NotFoundException {
-        InvoiceDetail newInvoiceDetail = new InvoiceDetail();
-        newInvoiceDetail.setQuantity(requestInvoiceDetails.getQuantity());
-        newInvoiceDetail.setDiscount(requestInvoiceDetails.getDiscount());
-        newInvoiceDetail.setItem(itemService.findByNameContaining(requestInvoiceDetails.getItemName()));
-        newInvoiceDetail.setInvoice(invoiceService.findInvoice(requestInvoiceDetails.getInvoiceId())
-                .orElseThrow(() -> new NotFoundException("Invoice not found: "+ requestInvoiceDetails.getInvoiceId())));
-        InvoiceDetail createInvoiceDetail = invoiceDetailService.createInvoiceDetail(newInvoiceDetail);
-        return ResponseEntity
-                .created(URI.create(InvoiceDetailResource.PATH +"/"+createInvoiceDetail.getId()))
-                .body(invoiceDetailMapper.toDto(createInvoiceDetail));
-    }
-
-    @DeleteMapping("/id{}")
-    public ResponseEntity<Void>delete(@PathVariable(value = "id")Integer id){
-        invoiceDetailService.deleteOrderDetail(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<InvoiceDetailDto> findInvoiceDetailById(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+        return ResponseEntity.ok(invoiceDetailMapper.toDto(invoiceDetailService.findInvoiceDetail(id)));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<InvoiceDetailDto> update(@PathVariable(value = "id")Integer id,@RequestBody InvoiceDetailRequest requestInvoiceDetails) throws NotFoundException {
-        InvoiceDetail updateInvoiceDetail = new InvoiceDetail();
-        updateInvoiceDetail.setQuantity(requestInvoiceDetails.getQuantity());
-        updateInvoiceDetail.setDiscount(requestInvoiceDetails.getDiscount());
-        updateInvoiceDetail.setItem(itemService.findByNameContaining(requestInvoiceDetails.getItemName()));
-        updateInvoiceDetail.setInvoice(invoiceService.findInvoice(requestInvoiceDetails.getInvoiceId())
-                .orElseThrow(() -> new NotFoundException("Invoice not found: "+ requestInvoiceDetails.getInvoiceId())));
-        return ResponseEntity.ok(invoiceDetailMapper.toDto(invoiceDetailService.update(id,updateInvoiceDetail)));
+    public ResponseEntity<InvoiceDetailDto> update(@PathVariable(value = "id") Integer id, @RequestBody InvoiceDetailRequest requestInvoiceDetails) throws ResourceNotFoundException {
+        return ResponseEntity.ok(invoiceDetailMapper.toDto(invoiceDetailService.update(id, requestInvoiceDetails)));
     }
 }

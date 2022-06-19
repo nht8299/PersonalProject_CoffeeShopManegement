@@ -1,12 +1,16 @@
 package com.axonactive.coffeeshopmanagement.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import static org.hibernate.annotations.OnDeleteAction.CASCADE;
 
 @Data
 @Entity
@@ -25,11 +29,25 @@ public class InvoiceDetail {
 
     private Double finalPrice;
 
-    @JoinColumn
+    @JoinColumn(name = "invoice_id", nullable = false)
+    @OnDelete(action = CASCADE)
     @ManyToOne
+    @JsonIgnore
     private Invoice invoice;
 
-    @JoinColumn
+    @JoinColumn(name = "item_id", nullable = false)
     @ManyToOne
     private Item item;
+
+    public Double getFinalPrice() {
+        double finalPrice;
+        if (this.discount != 0) {
+            finalPrice = this.item.getPrice() * this.discount * this.quantity;
+        } else {
+            finalPrice = this.item.getPrice() * this.quantity;
+        }
+        return finalPrice;
+    }
+
+
 }
