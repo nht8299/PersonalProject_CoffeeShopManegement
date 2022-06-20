@@ -15,8 +15,9 @@ import java.util.List;
 public class InvoiceRequest {
 
     private PaymentMethod paymentMethod;
-    private String customerPhoneNumber;
+    private Integer customerId;
     private String employeeId;
+    private Integer coffeeShopId;
     private List<InvoiceDetailRequest> invoiceDetailsRequest;
 
 }

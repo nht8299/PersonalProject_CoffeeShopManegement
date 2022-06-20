@@ -8,11 +8,13 @@ import com.axonactive.coffeeshopmanagement.api.request.CoffeeShopRequest;
 import com.axonactive.coffeeshopmanagement.entities.CoffeeShop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
+@PreAuthorize("hasRole('MANAGER')")
 @CrossOrigin(value = "3600")
 @RestController
 @RequestMapping(CoffeeShopResource.PATH)

@@ -1,6 +1,6 @@
 
-Category
-------------------------------------------------------------
+--Category
+--------------------------------------------------------------
 
 INSERT INTO public.category (name, description) VALUES ('Coffee', 'Local and International kind of coffee')returning id;
 INSERT INTO public.category (name, description) VALUES ('Soft Drink', 'Fresh juice')returning id;
@@ -8,15 +8,15 @@ INSERT INTO public.category (name, description) VALUES ('Milk',null)returning id
 INSERT INTO public.category (name, description) VALUES ('Tea', 'Fruit tea and other')returning id;
 INSERT INTO public.category (name, description) VALUES ('Other', null)returning id;
 
------------------------------------------------------------------------
-CoffeeShop
------------------------------------------------------------------------
+-------------------------------------------------------------------------
+--CoffeeShop
+-------------------------------------------------------------------------
 
 INSERT INTO public.coffee_shop (address, homepage, location, name, phone_number) VALUES ('56A Lê Hồng Phong','thelocalbeans.com','Hải Châu, Đà Nẵng', 'The Local Beans', '0123456789')returning id;
 
-----------------------------------------------------------------------
-Customer
------------------------------------------------------------------------
+------------------------------------------------------------------------
+--Customer
+-------------------------------------------------------------------------
 
 INSERT INTO public.customer (address, full_name, phone_number,feed_back) VALUES ('39B Trường Sơn', 'Nguyen Quoc Huy', '0987652522',null)returning id;
 INSERT INTO public.customer (address, full_name, phone_number,feed_back) VALUES ('34 Đinh Tiên Hoàng', 'Nguyen Ngoc Dung', '082828272','Good Coffee')returning id;
@@ -30,9 +30,9 @@ INSERT INTO public.customer (address, full_name, phone_number,feed_back) VALUES 
 INSERT INTO public.customer (address, full_name, phone_number,feed_back) VALUES ('256 Hải Phòng', 'Tran Quang Huy', '0987643235',null)returning id;
 INSERT INTO public.customer (address, full_name, phone_number,feed_back) VALUES ('344 Trần Phú', 'Nguyen Hung Thinh', '0987623456',null)returning id;
 
------------------------------------------------------------------------
-Employee
------------------------------------------------------------------------
+-------------------------------------------------------------------------
+--Employee
+-------------------------------------------------------------------------
 
 INSERT INTO public.employee (address, date_of_birth, first_name, gender, identity, last_name, middle_name, phone_number, role, start_date, status, type, coffee_shop_id, id) VALUES (
 '32 - 34 Dinh Tien Hoang', '1999-02-08', 'Thinh', 'MALE', '12304958202', 'Nguyen', 'Hung', '0705018299', 'MANAGER', '2017-05-04', true, 'FULLTIME', '1', 'NV001')returning id;
@@ -59,9 +59,9 @@ INSERT INTO public.employee (address, date_of_birth, first_name, gender, identit
 INSERT INTO public.employee (address, date_of_birth, first_name, gender, identity, last_name, middle_name, phone_number, role, start_date, status, type, coffee_shop_id, id) VALUES (
 '09 Nguyen Tuan', '1999-10-18', 'Phong', 'MALE', '12304958202', 'Nguyen', 'Van', '0345884657', 'SECURITY', '2022-06-01', FALSE, 'PARTTIME', '1', 'NV012')returning id;
 
----------------------------------------------------------------------
-Item
----------------------------------------------------------------------
+-----------------------------------------------------------------------
+--Item
+-----------------------------------------------------------------------
 
 INSERT INTO public.item (
 name, price, status, category_id, id) VALUES ('Black Coffee', '24000', 'ACTIVE', '1', 'CF001');
@@ -104,9 +104,9 @@ name, price, status, category_id, id) VALUES ('Mix Fruit Yogurt', '45000', 'ACTI
 INSERT INTO public.item (
 name, price, status, category_id, id) VALUES ('Cocoa', '39000', 'ACTIVE', '5', 'D002');
 
----------------------------------------------------------------------------------------------------------
-ReceiptsAndPayments
----------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
+--ReceiptsAndPayments
+-----------------------------------------------------------------------------------------------------------
 
 INSERT INTO public.receipts_and_payments (amount, content, description, type, employee_id, date, "time") VALUES ('1000000', 'Electricity Bill', 'Electricity bill for month 6th', 'PAYMENTS', 'NV001', '2022-06-20', '10:08:00');
 INSERT INTO public.receipts_and_payments (amount, content, description, type, employee_id, date, "time") VALUES ('2000000', 'Water Bill', 'Water bill for month 6th', 'PAYMENTS', 'NV007', '2022-06-20', '10:08:00');
@@ -115,9 +115,9 @@ INSERT INTO public.receipts_and_payments (amount, content, description, type, em
 INSERT INTO public.receipts_and_payments (amount, content, description, type, employee_id, date, "time") VALUES ('2000000', 'Meeting Room Receipts', 'Meeting room receipt for month 6th', 'RECEIPTS', 'NV007', '2022-06-20', '10:08:00');
 INSERT INTO public.receipts_and_payments (amount, content, description, type, employee_id, date, "time") VALUES ('3000000', 'working Space Receipts', 'Working space receip for month 6th', 'RECEIPTS', 'NV007', '2022-06-20', '10:08:00');
 
----------------------------------------------------------------------------------------------------------
-Invoice
----------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------
+--Invoice
+-----------------------------------------------------------------------------------------------------------
 
 INSERT INTO public.invoice (date, payment_method, "time", customer_id, employee_id) VALUES ('2022-06-01', 'CASH', '08:00:00', '1'::integer, 'NV006');
 INSERT INTO public.invoice (date, payment_method, "time", customer_id, employee_id) VALUES ('2022-06-02', 'EWALLET', '08:00:00', '2'::integer, 'NV007');
@@ -135,9 +135,10 @@ INSERT INTO public.invoice (date, payment_method, "time", customer_id, employee_
 INSERT INTO public.invoice (date, payment_method, "time", customer_id, employee_id) VALUES ('2022-06-14', 'EWALLET', '08:00:00', '1'::integer, 'NV007');
 INSERT INTO public.invoice (date, payment_method, "time", customer_id, employee_id) VALUES ('2022-06-15', 'CASH', '08:00:00', '3'::integer, 'NV006');
 
-----------------------------------------------------------------------------------------------------------
-Invoice Details
-----------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------
+--Invoice Details
+------------------------------------------------------------------------------------------------------------
+
 INSERT INTO public.invoice_detail (discount, quantity, invoice_id, item_id) VALUES ('0', '3', '1', 'CF001');
 INSERT INTO public.invoice_detail (discount, quantity, invoice_id, item_id) VALUES ('0', '1', '1', 'J001');
 INSERT INTO public.invoice_detail (discount, quantity, invoice_id, item_id) VALUES ('0.2', '2', '2', 'CF002');
@@ -171,4 +172,14 @@ INSERT INTO public.invoice_detail (discount, quantity, invoice_id, item_id) VALU
 INSERT INTO public.invoice_detail (discount, quantity, invoice_id, item_id) VALUES ('0', '3', '15', 'D002');
 INSERT INTO public.invoice_detail (discount, quantity, invoice_id, item_id) VALUES ('0', '2', '1', 'M001');
 
+-----------------------------------------------------
+--User
+-----------------------------------------------------
+INSERT INTO public.users (username, employee_id, password) VALUES ('hungthinh', 'NV001', '$2a$10$hJcRFuPNuz.tllNs0nJlR.C2aoCxK610IIhzVq1ZuJWtiX6fTZ/4y');
+INSERT INTO public.users (employee_id, password, username) VALUES ('NV006', '$2a$10$GwSZbDBVdsvj1RvUKYIgg.GIw3tGNYgVQxtbtt8uJlVTlEpdEL0d2', 'vananh');
 
+------------------------------------------------------
+--RoleAssignment
+------------------------------------------------------
+INSERT INTO public.user_role_assignment (role, user_id) VALUES ('ROLE_MANAGER', '1');
+INSERT INTO public.user_role_assignment (role, user_id) VALUES ('ROLE_CASHIER', '2');

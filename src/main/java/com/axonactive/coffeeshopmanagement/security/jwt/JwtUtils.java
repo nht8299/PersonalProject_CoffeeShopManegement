@@ -30,12 +30,12 @@ public class JwtUtils implements Serializable {
     }
 
     public String getUserNameFromJwtToken(String token){
-        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJwt(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
     }
 
     public Boolean validateJwtToken(String authToken){
         try {
-            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJwt(authToken);
+            Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);
             return true;
         }catch (SignatureException e){
             logger.error("Invalid JWT signature: {}",e.getMessage());

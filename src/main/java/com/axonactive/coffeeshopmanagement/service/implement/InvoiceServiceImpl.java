@@ -2,6 +2,8 @@ package com.axonactive.coffeeshopmanagement.service.implement;
 
 
 import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
+import com.axonactive.coffeeshopmanagement.entities.CoffeeShop;
+import com.axonactive.coffeeshopmanagement.entities.Employee;
 import com.axonactive.coffeeshopmanagement.service.*;
 import com.axonactive.coffeeshopmanagement.service.dto.DailyRevenueByInvoiceDto;
 import com.axonactive.coffeeshopmanagement.service.dto.ItemSalesDetailsDto;
@@ -37,6 +39,8 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     private final ItemService itemService;
 
+    private final CoffeeShopService coffeeShopService;
+
     @Override
     public List<Invoice> getAll() {
         List<Invoice> invoiceList = invoiceRepository.findAll();
@@ -58,10 +62,14 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice newInvoice = new Invoice();
         newInvoice.setDate(LocalDate.now());
         newInvoice.setTime(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
-        newInvoice.setEmployee(employeeService.findEmployee(requestInvoice.getEmployeeId())
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + requestInvoice.getEmployeeId())));
-        newInvoice.setCustomer(customerService.findByPhoneNumber(requestInvoice.getCustomerPhoneNumber())
-                .orElseThrow(() -> new ResourceNotFoundException("customer not found: " + requestInvoice.getCustomerPhoneNumber())));
+        if (employeeService.findEmployee(requestInvoice.getEmployeeId()).get().getCoffeeShop().equals(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId()).get())) {
+            newInvoice.setEmployee(employeeService.findEmployee(requestInvoice.getEmployeeId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + requestInvoice.getEmployeeId())));
+            newInvoice.setCoffeeShop(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId())
+                    .orElseThrow(() -> new ResourceNotFoundException("CoffeeShop not found with id: " + requestInvoice.getCoffeeShopId())));
+        } else throw new ResourceNotFoundException("Business exception!");
+        newInvoice.setCustomer(customerService.findCustomer(requestInvoice.getCustomerId())
+                .orElseThrow(() -> new ResourceNotFoundException("customer not found: " + requestInvoice.getCustomerId())));
         if (requestInvoice.getInvoiceDetailsRequest() != null) {
             List<InvoiceDetail> invoiceDetailList = new ArrayList<>();
             for (InvoiceDetailRequest invoiceDetailsRequest : requestInvoice.getInvoiceDetailsRequest()) {
@@ -102,10 +110,14 @@ public class InvoiceServiceImpl implements InvoiceService {
         Invoice updateInvoice = new Invoice();
         updateInvoice.setDate(LocalDate.now());
         updateInvoice.setTime(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
-        updateInvoice.setEmployee(employeeService.findEmployee(requestInvoice.getEmployeeId())
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + requestInvoice.getEmployeeId())));
-        updateInvoice.setCustomer(customerService.findByPhoneNumber(requestInvoice.getCustomerPhoneNumber())
-                .orElseThrow(() -> new ResourceNotFoundException("customer not found: " + requestInvoice.getCustomerPhoneNumber())));
+        if (employeeService.findEmployee(requestInvoice.getEmployeeId()).get().getCoffeeShop().equals(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId()).get())) {
+            updateInvoice.setEmployee(employeeService.findEmployee(requestInvoice.getEmployeeId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + requestInvoice.getEmployeeId())));
+            updateInvoice.setCoffeeShop(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId())
+                    .orElseThrow(() -> new ResourceNotFoundException("CoffeeShop not found with id: " + requestInvoice.getCoffeeShopId())));
+        } else throw new ResourceNotFoundException("Business exception!");
+        updateInvoice.setCustomer(customerService.findCustomer(requestInvoice.getCustomerId())
+                .orElseThrow(() -> new ResourceNotFoundException("customer not found: " + requestInvoice.getCustomerId())));
         if (requestInvoice.getInvoiceDetailsRequest() != null) {
             List<InvoiceDetail> invoiceDetailList = new ArrayList<>();
             for (InvoiceDetailRequest invoiceDetailsRequest : requestInvoice.getInvoiceDetailsRequest()) {

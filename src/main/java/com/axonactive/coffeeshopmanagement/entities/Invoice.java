@@ -42,8 +42,14 @@ public class Invoice {
     @ManyToOne
     private Employee employee;
 
+    @JoinColumn
+    @ManyToOne
+    private CoffeeShop coffeeShop;
+
+
     @OneToMany(mappedBy = "invoice",cascade = CascadeType.ALL,orphanRemoval = true)
     List<InvoiceDetail> invoiceDetailsList;
+
 
     public Double getTotalPrice() {
         double totalPrice = 0;

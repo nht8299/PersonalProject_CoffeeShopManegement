@@ -24,5 +24,6 @@ public class InvoiceDto {
     private String customerName;
     private String customerPhoneNumber;
     private String employeeFullName;
+    private String coffeeShopName;
     private List<InvoiceDetailDto> invoiceDetailsList;
 }

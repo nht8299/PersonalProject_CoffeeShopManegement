@@ -103,4 +103,5 @@ public class InvoiceResource {
         return ResponseEntity.ok(invoiceMapper.toDto(invoiceService.update(id, requestInvoice)));
     }
 
+
 }
