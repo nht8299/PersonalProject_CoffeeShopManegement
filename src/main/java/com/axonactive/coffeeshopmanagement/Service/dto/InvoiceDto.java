@@ -25,5 +25,5 @@ public class InvoiceDto {
     private String customerName;
     private String customerPhoneNumber;
     private String employeeFullName;
-    private List<InvoiceDetail> invoiceDetailsList;
+    private List<InvoiceDetailDto> invoiceDetailsList;
 }

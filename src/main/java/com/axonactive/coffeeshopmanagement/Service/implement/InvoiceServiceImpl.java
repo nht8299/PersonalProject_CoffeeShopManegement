@@ -22,6 +22,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InvoiceServiceImpl implements InvoiceService {
 
+    private final InvoiceDetailRepository invoiceDetailRepository;
+
     private final InvoiceRepository invoiceRepository;
 
 
@@ -36,6 +38,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         List<Invoice> invoiceList = invoiceRepository.findAll();
         for (Invoice invoice : invoiceList
         ) {
+            invoice.getInvoiceDetailsList().forEach(invoiceDetail -> {
+                invoiceDetail.setFinalPrice(invoiceDetail.getFinalPrice());
+                invoiceDetailRepository.save(invoiceDetail);
+            });
             invoice.setTotalPrice(invoice.getTotalPrice());
             invoiceRepository.save(invoice);
         }
@@ -74,6 +80,10 @@ public class InvoiceServiceImpl implements InvoiceService {
     public Invoice findInvoice(Integer id) throws ResourceNotFoundException {
         Invoice findInvoice = invoiceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Invoice not found with id: " + id));
         findInvoice.setTotalPrice(findInvoice.getTotalPrice());
+        findInvoice.getInvoiceDetailsList().forEach(invoiceDetail -> {
+            invoiceDetail.setFinalPrice(invoiceDetail.getFinalPrice());
+            invoiceDetailRepository.save(invoiceDetail);
+        });
         invoiceRepository.save(findInvoice);
         return findInvoice;
     }

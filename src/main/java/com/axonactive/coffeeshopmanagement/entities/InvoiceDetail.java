@@ -42,7 +42,7 @@ public class InvoiceDetail {
     public Double getFinalPrice() {
         double finalPrice;
         if (this.discount != 0) {
-            finalPrice = this.item.getPrice() * this.discount * this.quantity;
+            finalPrice = (this.item.getPrice() * this.quantity)-(this.item.getPrice()*this.quantity*this.discount);
         } else {
             finalPrice = this.item.getPrice() * this.quantity;
         }
