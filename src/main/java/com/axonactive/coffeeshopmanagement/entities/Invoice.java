@@ -42,15 +42,15 @@ public class Invoice {
     @ManyToOne
     private Employee employee;
 
-    @OneToMany(mappedBy = "invoice")
-    List<InvoiceDetail> invoiceDetails;
+    @OneToMany(mappedBy = "invoice",cascade = CascadeType.ALL,orphanRemoval = true)
+    List<InvoiceDetail> invoiceDetailsList;
 
     public Double getTotalPrice() {
         double totalPrice = 0;
-        if (null == this.invoiceDetails) {
+        if (null == this.invoiceDetailsList) {
             return totalPrice;
         }else {
-            for (InvoiceDetail invoiceDetail : invoiceDetails) {
+            for (InvoiceDetail invoiceDetail : invoiceDetailsList) {
                 totalPrice += invoiceDetail.getFinalPrice();
             }
            return totalPrice;

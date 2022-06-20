@@ -2,13 +2,12 @@ package com.axonactive.coffeeshopmanagement.Service.implement;
 
 
 import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
-import com.axonactive.coffeeshopmanagement.Service.CustomerService;
-import com.axonactive.coffeeshopmanagement.Service.EmployeeService;
-import com.axonactive.coffeeshopmanagement.Service.InvoiceService;
+import com.axonactive.coffeeshopmanagement.Service.*;
 import com.axonactive.coffeeshopmanagement.api.request.InvoiceDetailRequest;
 import com.axonactive.coffeeshopmanagement.api.request.InvoiceRequest;
 import com.axonactive.coffeeshopmanagement.entities.Invoice;
 import com.axonactive.coffeeshopmanagement.entities.InvoiceDetail;
+import com.axonactive.coffeeshopmanagement.repositories.InvoiceDetailRepository;
 import com.axonactive.coffeeshopmanagement.repositories.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,9 +24,12 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     private final InvoiceRepository invoiceRepository;
 
+
     private final EmployeeService employeeService;
 
     private final CustomerService customerService;
+
+    private final ItemService itemService;
 
     @Override
     public List<Invoice> getAll() {
@@ -49,8 +52,22 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + requestInvoice.getEmployeeId())));
         newInvoice.setCustomer(customerService.findByPhoneNumber(requestInvoice.getCustomerPhoneNumber())
                 .orElseThrow(() -> new ResourceNotFoundException("customer not found: " + requestInvoice.getCustomerPhoneNumber())));
-        newInvoice.setPaymentMethod(requestInvoice.getPaymentMethod());
-        return invoiceRepository.save(newInvoice);
+        if (requestInvoice.getInvoiceDetailsRequest() != null) {
+            List<InvoiceDetail> invoiceDetailList = new ArrayList<>();
+            for (InvoiceDetailRequest invoiceDetailsRequest : requestInvoice.getInvoiceDetailsRequest()) {
+                InvoiceDetail newInvoiceDetail = new InvoiceDetail();
+                newInvoiceDetail.setItem(itemService.findItem(invoiceDetailsRequest.getItemId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + invoiceDetailsRequest.getItemId())));
+                newInvoiceDetail.setDiscount(invoiceDetailsRequest.getDiscount());
+                newInvoiceDetail.setQuantity(invoiceDetailsRequest.getQuantity());
+                newInvoiceDetail.setFinalPrice(newInvoiceDetail.getFinalPrice());
+                newInvoiceDetail.setInvoice(newInvoice);
+                invoiceDetailList.add(newInvoiceDetail);
+            }
+            newInvoice.setInvoiceDetailsList(invoiceDetailList);
+            newInvoice.setPaymentMethod(requestInvoice.getPaymentMethod());
+        }
+        return invoiceRepository.saveAndFlush(newInvoice);
     }
 
     @Override
@@ -68,17 +85,29 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Invoice update(Integer id, InvoiceRequest requestInvoice) throws ResourceNotFoundException {
-        Invoice updateInvoice = invoiceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Invoice not found with id: " + id));
+        Invoice updateInvoice = new Invoice();
         updateInvoice.setDate(LocalDate.now());
         updateInvoice.setTime(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
         updateInvoice.setEmployee(employeeService.findEmployee(requestInvoice.getEmployeeId())
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + requestInvoice.getEmployeeId())));
         updateInvoice.setCustomer(customerService.findByPhoneNumber(requestInvoice.getCustomerPhoneNumber())
                 .orElseThrow(() -> new ResourceNotFoundException("customer not found: " + requestInvoice.getCustomerPhoneNumber())));
-        updateInvoice.setPaymentMethod(requestInvoice.getPaymentMethod());
-        updateInvoice.setTotalPrice(updateInvoice.getTotalPrice());
-        return invoiceRepository.save(updateInvoice);
+        if (requestInvoice.getInvoiceDetailsRequest() != null) {
+            List<InvoiceDetail> invoiceDetailList = new ArrayList<>();
+            for (InvoiceDetailRequest invoiceDetailsRequest : requestInvoice.getInvoiceDetailsRequest()) {
+                InvoiceDetail newInvoiceDetail = new InvoiceDetail();
+                newInvoiceDetail.setItem(itemService.findItem(invoiceDetailsRequest.getItemId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + invoiceDetailsRequest.getItemId())));
+                newInvoiceDetail.setDiscount(invoiceDetailsRequest.getDiscount());
+                newInvoiceDetail.setQuantity(invoiceDetailsRequest.getQuantity());
+                newInvoiceDetail.setFinalPrice(newInvoiceDetail.getFinalPrice());
+                newInvoiceDetail.setInvoice(updateInvoice);
+                invoiceDetailList.add(newInvoiceDetail);
+            }
+            updateInvoice.setInvoiceDetailsList(invoiceDetailList);
+            updateInvoice.setPaymentMethod(requestInvoice.getPaymentMethod());
+        }
+        return invoiceRepository.saveAndFlush(updateInvoice);
     }
 
     public boolean invoiceIsExist(Integer id) {

@@ -17,6 +17,6 @@ public class InvoiceRequest {
     private PaymentMethod paymentMethod;
     private String customerPhoneNumber;
     private String employeeId;
-    private List<InvoiceDetailRequest> invoiceDetailRequestList;
+    private List<InvoiceDetailRequest> invoiceDetailsRequest;
 
 }
