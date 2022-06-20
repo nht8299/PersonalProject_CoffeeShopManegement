@@ -1,10 +1,8 @@
 package com.axonactive.coffeeshopmanagement.repositories;
 
-import com.axonactive.coffeeshopmanagement.service.dto.DailyRevenueByInvoiceDto;
-import com.axonactive.coffeeshopmanagement.service.dto.ItemSalesDetailsDto;
-import com.axonactive.coffeeshopmanagement.service.dto.TotalRevenueOfPeriodTimeDto;
 import com.axonactive.coffeeshopmanagement.entities.Invoice;
-import org.apache.tomcat.jni.Local;
+import com.axonactive.coffeeshopmanagement.service.dto.DailyRevenueByInvoiceDto;
+import com.axonactive.coffeeshopmanagement.service.dto.TotalRevenueOfPeriodTimeDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
