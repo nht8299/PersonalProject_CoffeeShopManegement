@@ -1,7 +1,7 @@
-package com.axonactive.coffeeshopmanagement.Service.implement;
+package com.axonactive.coffeeshopmanagement.service.implement;
 
 import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
-import com.axonactive.coffeeshopmanagement.Service.CategoryService;
+import com.axonactive.coffeeshopmanagement.service.CategoryService;
 import com.axonactive.coffeeshopmanagement.api.request.CategoryRequest;
 import com.axonactive.coffeeshopmanagement.entities.Category;
 import com.axonactive.coffeeshopmanagement.repositories.CategoryRepository;

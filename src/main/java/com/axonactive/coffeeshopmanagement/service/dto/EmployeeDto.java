@@ -1,4 +1,4 @@
-package com.axonactive.coffeeshopmanagement.Service.dto;
+package com.axonactive.coffeeshopmanagement.service.dto;
 
 import com.axonactive.coffeeshopmanagement.entities.enums.EmployeeRole;
 import com.axonactive.coffeeshopmanagement.entities.enums.EmployeeType;
@@ -6,7 +6,6 @@ import com.axonactive.coffeeshopmanagement.entities.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Data
 @AllArgsConstructor

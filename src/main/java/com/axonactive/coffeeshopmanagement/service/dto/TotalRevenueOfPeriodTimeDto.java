@@ -1,14 +1,12 @@
-package com.axonactive.coffeeshopmanagement.Service.dto;
+package com.axonactive.coffeeshopmanagement.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Access;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TotalRevenueOfPeriodTime {
-    private Long TotalRevenue;
+public class TotalRevenueOfPeriodTimeDto {
+    private Double TotalRevenue;
 }

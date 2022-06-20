@@ -1,14 +1,16 @@
-package com.axonactive.coffeeshopmanagement.Service.implement;
+package com.axonactive.coffeeshopmanagement.service.implement;
 
 import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
-import com.axonactive.coffeeshopmanagement.Service.CategoryService;
-import com.axonactive.coffeeshopmanagement.Service.ItemService;
+import com.axonactive.coffeeshopmanagement.service.CategoryService;
+import com.axonactive.coffeeshopmanagement.service.ItemService;
 import com.axonactive.coffeeshopmanagement.api.request.ItemRequest;
 import com.axonactive.coffeeshopmanagement.entities.Item;
 import com.axonactive.coffeeshopmanagement.repositories.ItemRepository;
+import com.axonactive.coffeeshopmanagement.service.dto.ItemSalesDetailsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,5 +65,10 @@ public class ItemServiceImpl implements ItemService {
         updateItem.setCategory(categoryService.findCategory(requestItem.getCategoryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: "+requestItem.getCategoryId())));
         return itemRepository.save(updateItem);
+    }
+
+    @Override
+    public List<ItemSalesDetailsDto> itemSalesDetailsOfOnePeriod (LocalDate date1, LocalDate date2){
+        return itemRepository.itemSalesDetailsOfOnePeriod(date1,date2);
     }
 }

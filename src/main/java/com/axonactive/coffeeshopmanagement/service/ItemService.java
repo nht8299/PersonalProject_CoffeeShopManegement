@@ -1,9 +1,11 @@
-package com.axonactive.coffeeshopmanagement.Service;
+package com.axonactive.coffeeshopmanagement.service;
 
 import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.api.request.ItemRequest;
 import com.axonactive.coffeeshopmanagement.entities.Item;
+import com.axonactive.coffeeshopmanagement.service.dto.ItemSalesDetailsDto;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,4 +22,6 @@ public interface ItemService {
     Item findByNameContaining (String name);
 
     Item update(String id,ItemRequest requestItem) throws ResourceNotFoundException;
+
+    List<ItemSalesDetailsDto> itemSalesDetailsOfOnePeriod(LocalDate date1, LocalDate date2);
 }

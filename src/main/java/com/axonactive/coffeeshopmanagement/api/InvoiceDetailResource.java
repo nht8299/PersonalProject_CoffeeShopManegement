@@ -1,18 +1,14 @@
 package com.axonactive.coffeeshopmanagement.api;
 
 import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
-import com.axonactive.coffeeshopmanagement.Service.InvoiceDetailService;
-import com.axonactive.coffeeshopmanagement.Service.InvoiceService;
-import com.axonactive.coffeeshopmanagement.Service.ItemService;
-import com.axonactive.coffeeshopmanagement.Service.dto.InvoiceDetailDto;
-import com.axonactive.coffeeshopmanagement.Service.mapper.InvoiceDetailMapper;
+import com.axonactive.coffeeshopmanagement.service.InvoiceDetailService;
+import com.axonactive.coffeeshopmanagement.service.dto.InvoiceDetailDto;
+import com.axonactive.coffeeshopmanagement.service.mapper.InvoiceDetailMapper;
 import com.axonactive.coffeeshopmanagement.api.request.InvoiceDetailRequest;
-import com.axonactive.coffeeshopmanagement.entities.InvoiceDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
 @CrossOrigin(value = "3600")

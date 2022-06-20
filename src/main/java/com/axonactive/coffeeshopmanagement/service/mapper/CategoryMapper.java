@@ -1,6 +1,6 @@
-package com.axonactive.coffeeshopmanagement.Service.mapper;
+package com.axonactive.coffeeshopmanagement.service.mapper;
 
-import com.axonactive.coffeeshopmanagement.Service.dto.CategoryDto;
+import com.axonactive.coffeeshopmanagement.service.dto.CategoryDto;
 import com.axonactive.coffeeshopmanagement.entities.Category;
 import org.mapstruct.Mapper;
 

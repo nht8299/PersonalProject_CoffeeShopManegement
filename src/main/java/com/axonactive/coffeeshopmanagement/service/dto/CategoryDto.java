@@ -1,4 +1,4 @@
-package com.axonactive.coffeeshopmanagement.Service.dto;
+package com.axonactive.coffeeshopmanagement.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

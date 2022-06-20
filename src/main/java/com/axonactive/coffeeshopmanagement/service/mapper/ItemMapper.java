@@ -1,7 +1,6 @@
-package com.axonactive.coffeeshopmanagement.Service.mapper;
+package com.axonactive.coffeeshopmanagement.service.mapper;
 
-import com.axonactive.coffeeshopmanagement.Service.dto.EmployeeDto;
-import com.axonactive.coffeeshopmanagement.Service.dto.ItemDto;
+import com.axonactive.coffeeshopmanagement.service.dto.ItemDto;
 import com.axonactive.coffeeshopmanagement.entities.Item;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

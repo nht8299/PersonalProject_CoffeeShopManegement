@@ -1,12 +1,14 @@
-package com.axonactive.coffeeshopmanagement.Service;
+package com.axonactive.coffeeshopmanagement.service;
 
 import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
-import com.axonactive.coffeeshopmanagement.api.request.InvoiceDetailRequest;
+import com.axonactive.coffeeshopmanagement.service.dto.DailyRevenueByInvoiceDto;
+import com.axonactive.coffeeshopmanagement.service.dto.ItemSalesDetailsDto;
+import com.axonactive.coffeeshopmanagement.service.dto.TotalRevenueOfPeriodTimeDto;
 import com.axonactive.coffeeshopmanagement.api.request.InvoiceRequest;
 import com.axonactive.coffeeshopmanagement.entities.Invoice;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public interface InvoiceService {
 
@@ -21,6 +23,14 @@ public interface InvoiceService {
     Invoice update(Integer id, InvoiceRequest requestInvoice) throws ResourceNotFoundException;
 
     boolean invoiceIsExist(Integer id);
+
+    List<Invoice>findByDateBetween(LocalDate date1,LocalDate date2);
+
+    List<DailyRevenueByInvoiceDto> DailyRevenueBetweenTwoDate(LocalDate date1,LocalDate date2);
+
+    TotalRevenueOfPeriodTimeDto totalRevenueOfPeriodTime(LocalDate date1,LocalDate date2);
+
+
 }
 
 

@@ -1,8 +1,11 @@
-package com.axonactive.coffeeshopmanagement.Service.implement;
+package com.axonactive.coffeeshopmanagement.service.implement;
 
 
 import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
-import com.axonactive.coffeeshopmanagement.Service.*;
+import com.axonactive.coffeeshopmanagement.service.*;
+import com.axonactive.coffeeshopmanagement.service.dto.DailyRevenueByInvoiceDto;
+import com.axonactive.coffeeshopmanagement.service.dto.ItemSalesDetailsDto;
+import com.axonactive.coffeeshopmanagement.service.dto.TotalRevenueOfPeriodTimeDto;
 import com.axonactive.coffeeshopmanagement.api.request.InvoiceDetailRequest;
 import com.axonactive.coffeeshopmanagement.api.request.InvoiceRequest;
 import com.axonactive.coffeeshopmanagement.entities.Invoice;
@@ -10,6 +13,7 @@ import com.axonactive.coffeeshopmanagement.entities.InvoiceDetail;
 import com.axonactive.coffeeshopmanagement.repositories.InvoiceDetailRepository;
 import com.axonactive.coffeeshopmanagement.repositories.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -122,6 +126,21 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     public boolean invoiceIsExist(Integer id) {
         return invoiceRepository.existsById(id);
+    }
+
+    @Override
+    public List<Invoice> findByDateBetween(LocalDate date1, LocalDate date2) {
+        return invoiceRepository.findByDateBetween(date1,date2);
+    }
+
+    @Override
+    public List<DailyRevenueByInvoiceDto> DailyRevenueBetweenTwoDate(LocalDate date1, LocalDate date2) {
+        return invoiceRepository.DailyRevenueBetweenTwoDate(date1,date2);
+    }
+
+    @Override
+    public TotalRevenueOfPeriodTimeDto totalRevenueOfPeriodTime(LocalDate date1,LocalDate date2){
+        return invoiceRepository.totalRevenueOfPeriodTime(date1,date2);
     }
 
 

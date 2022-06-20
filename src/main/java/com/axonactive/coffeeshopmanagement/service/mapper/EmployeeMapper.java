@@ -1,10 +1,9 @@
-package com.axonactive.coffeeshopmanagement.Service.mapper;
+package com.axonactive.coffeeshopmanagement.service.mapper;
 
-import com.axonactive.coffeeshopmanagement.Service.dto.EmployeeDto;
+import com.axonactive.coffeeshopmanagement.service.dto.EmployeeDto;
 import com.axonactive.coffeeshopmanagement.entities.Employee;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 

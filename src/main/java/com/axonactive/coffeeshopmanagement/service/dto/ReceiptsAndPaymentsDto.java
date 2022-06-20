@@ -1,4 +1,4 @@
-package com.axonactive.coffeeshopmanagement.Service.dto;
+package com.axonactive.coffeeshopmanagement.service.dto;
 
 import com.axonactive.coffeeshopmanagement.entities.enums.ReceiptsOrPayments;
 import lombok.AllArgsConstructor;

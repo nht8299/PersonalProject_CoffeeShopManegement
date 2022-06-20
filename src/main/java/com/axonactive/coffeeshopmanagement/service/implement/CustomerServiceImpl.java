@@ -1,7 +1,7 @@
-package com.axonactive.coffeeshopmanagement.Service.implement;
+package com.axonactive.coffeeshopmanagement.service.implement;
 
 import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
-import com.axonactive.coffeeshopmanagement.Service.CustomerService;
+import com.axonactive.coffeeshopmanagement.service.CustomerService;
 import com.axonactive.coffeeshopmanagement.api.request.CustomerRequest;
 import com.axonactive.coffeeshopmanagement.entities.Customer;
 import com.axonactive.coffeeshopmanagement.repositories.CustomerRepository;

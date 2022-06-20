@@ -1,19 +1,15 @@
-package com.axonactive.coffeeshopmanagement.Service.implement;
+package com.axonactive.coffeeshopmanagement.service.implement;
 
 import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
-import com.axonactive.coffeeshopmanagement.Service.InvoiceDetailService;
-import com.axonactive.coffeeshopmanagement.Service.InvoiceService;
-import com.axonactive.coffeeshopmanagement.Service.ItemService;
+import com.axonactive.coffeeshopmanagement.service.InvoiceDetailService;
+import com.axonactive.coffeeshopmanagement.service.ItemService;
 import com.axonactive.coffeeshopmanagement.api.request.InvoiceDetailRequest;
-import com.axonactive.coffeeshopmanagement.entities.Invoice;
 import com.axonactive.coffeeshopmanagement.entities.InvoiceDetail;
 import com.axonactive.coffeeshopmanagement.repositories.InvoiceDetailRepository;
 import com.axonactive.coffeeshopmanagement.repositories.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
