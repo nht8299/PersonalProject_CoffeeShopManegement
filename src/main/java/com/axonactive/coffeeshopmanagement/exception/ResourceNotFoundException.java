@@ -1,4 +1,4 @@
-package com.axonactive.coffeeshopmanagement.Exception;
+package com.axonactive.coffeeshopmanagement.exception;
 
 public class ResourceNotFoundException extends Exception{
     public ResourceNotFoundException(String message){

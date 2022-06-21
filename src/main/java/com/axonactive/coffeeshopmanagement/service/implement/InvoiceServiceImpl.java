@@ -1,12 +1,9 @@
 package com.axonactive.coffeeshopmanagement.service.implement;
 
 
-import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
-import com.axonactive.coffeeshopmanagement.entities.CoffeeShop;
-import com.axonactive.coffeeshopmanagement.entities.Employee;
+import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.*;
 import com.axonactive.coffeeshopmanagement.service.dto.DailyRevenueByInvoiceDto;
-import com.axonactive.coffeeshopmanagement.service.dto.ItemSalesDetailsDto;
 import com.axonactive.coffeeshopmanagement.service.dto.TotalRevenueOfPeriodTimeDto;
 import com.axonactive.coffeeshopmanagement.api.request.InvoiceDetailRequest;
 import com.axonactive.coffeeshopmanagement.api.request.InvoiceRequest;
@@ -15,7 +12,6 @@ import com.axonactive.coffeeshopmanagement.entities.InvoiceDetail;
 import com.axonactive.coffeeshopmanagement.repositories.InvoiceDetailRepository;
 import com.axonactive.coffeeshopmanagement.repositories.InvoiceRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -155,5 +151,13 @@ public class InvoiceServiceImpl implements InvoiceService {
         return invoiceRepository.totalRevenueOfPeriodTime(date1,date2);
     }
 
+    @Override
+    public List<Invoice> findInvoiceByCustomerId(Integer id){
+        return invoiceRepository.findByCustomerId(id);
+    }
 
+    @Override
+    public List<Invoice> findInvoiceByCoffeeShopId(Integer id){
+        return invoiceRepository.findByCoffeeShopId(id);
+    }
 }

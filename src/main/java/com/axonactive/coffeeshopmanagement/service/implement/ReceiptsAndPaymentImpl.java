@@ -1,6 +1,6 @@
 package com.axonactive.coffeeshopmanagement.service.implement;
 
-import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
+import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.EmployeeService;
 import com.axonactive.coffeeshopmanagement.service.ReceiptsAndPaymentsService;
 import com.axonactive.coffeeshopmanagement.api.request.ReceiptsAndPaymentsRequest;

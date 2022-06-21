@@ -31,5 +31,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice,Integer> {
             "WHERE i.date BETWEEN :date1 and :date2 " )
     TotalRevenueOfPeriodTimeDto totalRevenueOfPeriodTime(@Param("date1")LocalDate date1, @Param("date2")LocalDate date2);
 
+    List<Invoice> findByCustomerId(Integer id);
 
+    List<Invoice> findByCoffeeShopId(Integer id);
 }

@@ -1,6 +1,6 @@
 package com.axonactive.coffeeshopmanagement.api;
 
-import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
+import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.CustomerService;
 import com.axonactive.coffeeshopmanagement.service.dto.CustomerDto;
 import com.axonactive.coffeeshopmanagement.service.mapper.CustomerMapper;

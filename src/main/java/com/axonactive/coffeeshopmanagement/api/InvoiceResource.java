@@ -1,6 +1,6 @@
 package com.axonactive.coffeeshopmanagement.api;
 
-import com.axonactive.coffeeshopmanagement.Exception.ResourceNotFoundException;
+import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.InvoiceDetailService;
 import com.axonactive.coffeeshopmanagement.service.InvoiceService;
 import com.axonactive.coffeeshopmanagement.service.dto.InvoiceDetailDto;
@@ -38,17 +38,16 @@ public class InvoiceResource {
     InvoiceDetailMapper invoiceDetailMapper;
 
     @GetMapping
-    public ResponseEntity<List<InvoiceDto>> getAll() {
-        return ResponseEntity.ok(invoiceMapper.toDtos(invoiceService.getAll()));
+    public ResponseEntity<List<InvoiceDto>> getAll(@RequestParam(value = "customerId",required = false)Integer customerId,@RequestParam(value = "coffeeShopId",required = false)Integer coffeeShopId) {
+        if ( null == customerId  && null == coffeeShopId) {
+            return ResponseEntity.ok(invoiceMapper.toDtos(invoiceService.getAll()));
+        }else if ( null == coffeeShopId ) {
+            return ResponseEntity.ok(invoiceMapper.toDtos(invoiceService.findInvoiceByCustomerId(customerId)));
+        }else return ResponseEntity.ok(invoiceMapper.toDtos(invoiceService.findInvoiceByCoffeeShopId(coffeeShopId)));
+
     }
 
-    @GetMapping("/{invoiceId}/invoice_details")
-    public ResponseEntity<List<InvoiceDetailDto>> getAll(@PathVariable(value = "invoiceId") Integer invoiceId) throws ResourceNotFoundException {
-        if (invoiceService.invoiceIsExist(invoiceId)) {
-            return ResponseEntity.ok(invoiceDetailMapper.toDtos(invoiceDetailService.findByInvoiceId(invoiceId)));
-        }
-        throw new ResourceNotFoundException("Invoice not found with id: " + invoiceId);
-    }
+
 
     @GetMapping("/{invoiceId}/invoice_details/{id}")
     public ResponseEntity<InvoiceDetailDto> getInvoiceDetailsById(@PathVariable(value = "invoiceId") Integer invoiceId, @PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
@@ -63,7 +62,7 @@ public class InvoiceResource {
 
     @GetMapping("/{id}")
     public ResponseEntity<InvoiceDto> findInvoiceById(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
-        return ResponseEntity.ok(invoiceMapper.toDto(invoiceService.findInvoice(id)));
+            return ResponseEntity.ok(invoiceMapper.toDto(invoiceService.findInvoice(id)));
     }
 
     @PostMapping
@@ -102,6 +101,5 @@ public class InvoiceResource {
     public ResponseEntity<InvoiceDto> update(@PathVariable(value = "id") Integer id, @RequestBody InvoiceRequest requestInvoice) throws ResourceNotFoundException {
         return ResponseEntity.ok(invoiceMapper.toDto(invoiceService.update(id, requestInvoice)));
     }
-
 
 }
