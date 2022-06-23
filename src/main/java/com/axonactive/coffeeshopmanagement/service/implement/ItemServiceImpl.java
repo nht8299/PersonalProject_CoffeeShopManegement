@@ -3,7 +3,7 @@ package com.axonactive.coffeeshopmanagement.service.implement;
 import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.CategoryService;
 import com.axonactive.coffeeshopmanagement.service.ItemService;
-import com.axonactive.coffeeshopmanagement.api.request.ItemRequest;
+import com.axonactive.coffeeshopmanagement.controller.request.ItemRequest;
 import com.axonactive.coffeeshopmanagement.entities.Item;
 import com.axonactive.coffeeshopmanagement.repositories.ItemRepository;
 import com.axonactive.coffeeshopmanagement.service.dto.ItemSalesDetailsDto;

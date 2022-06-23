@@ -3,7 +3,7 @@ package com.axonactive.coffeeshopmanagement.service.implement;
 import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.InvoiceDetailService;
 import com.axonactive.coffeeshopmanagement.service.ItemService;
-import com.axonactive.coffeeshopmanagement.api.request.InvoiceDetailRequest;
+import com.axonactive.coffeeshopmanagement.controller.request.InvoiceDetailRequest;
 import com.axonactive.coffeeshopmanagement.entities.InvoiceDetail;
 import com.axonactive.coffeeshopmanagement.repositories.InvoiceDetailRepository;
 import com.axonactive.coffeeshopmanagement.repositories.InvoiceRepository;
@@ -32,7 +32,11 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService {
         InvoiceDetail invoiceDetail = new InvoiceDetail();
         invoiceDetail.setItem(itemService.findItem(requestInvoiceDetails.getItemId()).orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + requestInvoiceDetails.getItemId())));
         invoiceDetail.setQuantity(requestInvoiceDetails.getQuantity());
-        invoiceDetail.setDiscount(requestInvoiceDetails.getDiscount());
+        if (null == requestInvoiceDetails.getDiscount()){
+            invoiceDetail.setDiscount(0.0);
+        }else {
+            invoiceDetail.setDiscount(requestInvoiceDetails.getDiscount());
+        }
         invoiceDetail.setFinalPrice(invoiceDetail.getFinalPrice());
         invoiceDetail.setInvoice(invoiceRepository.findById(invoiceId)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice not found with id: " + invoiceId)));
@@ -56,7 +60,11 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService {
         InvoiceDetail invoiceDetail = invoiceDetailRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Invoice detail not found: " + id));
         invoiceDetail.setQuantity(requestInvoiceDetails.getQuantity());
-        invoiceDetail.setDiscount(requestInvoiceDetails.getDiscount());
+        if (null == requestInvoiceDetails.getDiscount()){
+            invoiceDetail.setDiscount(0.0);
+        }else {
+            invoiceDetail.setDiscount(requestInvoiceDetails.getDiscount());
+        }
         invoiceDetail.setItem(itemService.findItem(requestInvoiceDetails.getItemId())
                 .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + id)));
         invoiceDetail.getFinalPrice();
@@ -65,12 +73,6 @@ public class InvoiceDetailServiceImpl implements InvoiceDetailService {
 
     @Override
     public List<InvoiceDetail> findByInvoiceId(Integer id) throws ResourceNotFoundException {
-//        List<InvoiceDetail> invoiceDetailsList = new ArrayList<>();
-//        for (InvoiceDetail invoiceDetails : invoiceDetailRepository.findByInvoiceId(id)) {
-//            invoiceDetails.getFinalPrice();
-//        }
-//        invoiceRepository.save(invoiceRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("Invoice not found with id: " + id)));
         return invoiceDetailRepository.findByInvoiceId(id);
     }
 

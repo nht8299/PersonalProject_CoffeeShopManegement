@@ -14,5 +14,5 @@ public class ItemSalesDetailsDto {
     private String itemId;
     private String itemName;
     private Long salesNumber;
-    private Double totalPrice;
+    private Long totalPrice;
 }

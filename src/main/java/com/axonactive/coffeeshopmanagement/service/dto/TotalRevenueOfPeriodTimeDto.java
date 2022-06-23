@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class TotalRevenueOfPeriodTimeDto {
-    private Double TotalRevenue;
+    private Long TotalRevenue;
 }

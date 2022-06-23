@@ -17,7 +17,7 @@ public class ReceiptsAndPaymentsDto {
     private LocalDate date;
     private LocalTime time;
     private ReceiptsOrPayments type;
-    private Double amount;
+    private Integer amount;
     private String content;
     private String description;
     private String employeeName;

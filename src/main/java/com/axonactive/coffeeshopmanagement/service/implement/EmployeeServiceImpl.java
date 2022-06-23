@@ -3,7 +3,7 @@ package com.axonactive.coffeeshopmanagement.service.implement;
 import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.CoffeeShopService;
 import com.axonactive.coffeeshopmanagement.service.EmployeeService;
-import com.axonactive.coffeeshopmanagement.api.request.EmployeeRequest;
+import com.axonactive.coffeeshopmanagement.controller.request.EmployeeRequest;
 import com.axonactive.coffeeshopmanagement.entities.Employee;
 import com.axonactive.coffeeshopmanagement.repositories.EmployeeRepository;
 import lombok.RequiredArgsConstructor;

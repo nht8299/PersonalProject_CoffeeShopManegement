@@ -1,4 +1,4 @@
-package com.axonactive.coffeeshopmanagement.api.request;
+package com.axonactive.coffeeshopmanagement.controller.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

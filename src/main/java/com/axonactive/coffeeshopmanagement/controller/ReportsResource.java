@@ -1,6 +1,6 @@
-package com.axonactive.coffeeshopmanagement.api;
+package com.axonactive.coffeeshopmanagement.controller;
 
-import com.axonactive.coffeeshopmanagement.api.request.DateRequest;
+import com.axonactive.coffeeshopmanagement.controller.request.DateRequest;
 import com.axonactive.coffeeshopmanagement.service.InvoiceService;
 import com.axonactive.coffeeshopmanagement.service.ItemService;
 import com.axonactive.coffeeshopmanagement.service.dto.DailyRevenueByInvoiceDto;

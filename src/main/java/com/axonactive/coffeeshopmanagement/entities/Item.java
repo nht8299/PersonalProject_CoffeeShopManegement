@@ -23,7 +23,7 @@ public class Item {
     private String name;
 
     @NotNull
-    private Double price;
+    private Integer price;
 
     @Enumerated(EnumType.STRING)
     private ItemStatus status;

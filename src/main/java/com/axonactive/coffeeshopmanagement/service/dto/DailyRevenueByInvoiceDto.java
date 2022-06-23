@@ -12,5 +12,5 @@ import java.time.LocalDate;
 public class DailyRevenueByInvoiceDto {
     private LocalDate date;
     private Long numberOfInvoice;
-    private Double totalRevenue;
+    private Long totalRevenue;
 }

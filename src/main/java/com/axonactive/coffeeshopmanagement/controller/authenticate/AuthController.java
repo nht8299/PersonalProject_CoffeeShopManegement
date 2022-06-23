@@ -1,4 +1,4 @@
-package com.axonactive.coffeeshopmanagement.api.authenticate;
+package com.axonactive.coffeeshopmanagement.controller.authenticate;
 
 import com.axonactive.coffeeshopmanagement.security.jwt.JwtRequest;
 import com.axonactive.coffeeshopmanagement.security.jwt.JwtResponse;

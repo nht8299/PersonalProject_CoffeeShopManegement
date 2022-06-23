@@ -5,8 +5,8 @@ import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.*;
 import com.axonactive.coffeeshopmanagement.service.dto.DailyRevenueByInvoiceDto;
 import com.axonactive.coffeeshopmanagement.service.dto.TotalRevenueOfPeriodTimeDto;
-import com.axonactive.coffeeshopmanagement.api.request.InvoiceDetailRequest;
-import com.axonactive.coffeeshopmanagement.api.request.InvoiceRequest;
+import com.axonactive.coffeeshopmanagement.controller.request.InvoiceDetailRequest;
+import com.axonactive.coffeeshopmanagement.controller.request.InvoiceRequest;
 import com.axonactive.coffeeshopmanagement.entities.Invoice;
 import com.axonactive.coffeeshopmanagement.entities.InvoiceDetail;
 import com.axonactive.coffeeshopmanagement.repositories.InvoiceDetailRepository;
@@ -72,7 +72,11 @@ public class InvoiceServiceImpl implements InvoiceService {
                 InvoiceDetail newInvoiceDetail = new InvoiceDetail();
                 newInvoiceDetail.setItem(itemService.findItem(invoiceDetailsRequest.getItemId())
                         .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + invoiceDetailsRequest.getItemId())));
-                newInvoiceDetail.setDiscount(invoiceDetailsRequest.getDiscount());
+                if ( null == newInvoiceDetail.getDiscount() ){
+                    newInvoiceDetail.setDiscount(0.0);
+                }else {
+                    newInvoiceDetail.setDiscount(invoiceDetailsRequest.getDiscount());
+                }
                 newInvoiceDetail.setQuantity(invoiceDetailsRequest.getQuantity());
                 newInvoiceDetail.setFinalPrice(newInvoiceDetail.getFinalPrice());
                 newInvoiceDetail.setInvoice(newInvoice);
@@ -120,7 +124,11 @@ public class InvoiceServiceImpl implements InvoiceService {
                 InvoiceDetail newInvoiceDetail = new InvoiceDetail();
                 newInvoiceDetail.setItem(itemService.findItem(invoiceDetailsRequest.getItemId())
                         .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + invoiceDetailsRequest.getItemId())));
-                newInvoiceDetail.setDiscount(invoiceDetailsRequest.getDiscount());
+                if ( null == newInvoiceDetail.getDiscount() ){
+                    newInvoiceDetail.setDiscount(0.0);
+                }else {
+                    newInvoiceDetail.setDiscount(invoiceDetailsRequest.getDiscount());
+                }
                 newInvoiceDetail.setQuantity(invoiceDetailsRequest.getQuantity());
                 newInvoiceDetail.setFinalPrice(newInvoiceDetail.getFinalPrice());
                 newInvoiceDetail.setInvoice(updateInvoice);

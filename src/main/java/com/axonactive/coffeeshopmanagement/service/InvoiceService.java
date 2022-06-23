@@ -3,7 +3,7 @@ package com.axonactive.coffeeshopmanagement.service;
 import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.dto.DailyRevenueByInvoiceDto;
 import com.axonactive.coffeeshopmanagement.service.dto.TotalRevenueOfPeriodTimeDto;
-import com.axonactive.coffeeshopmanagement.api.request.InvoiceRequest;
+import com.axonactive.coffeeshopmanagement.controller.request.InvoiceRequest;
 import com.axonactive.coffeeshopmanagement.entities.Invoice;
 
 import java.time.LocalDate;

@@ -1,7 +1,7 @@
 package com.axonactive.coffeeshopmanagement.service;
 
 import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
-import com.axonactive.coffeeshopmanagement.api.request.EmployeeRequest;
+import com.axonactive.coffeeshopmanagement.controller.request.EmployeeRequest;
 import com.axonactive.coffeeshopmanagement.entities.Employee;
 
 import java.util.List;

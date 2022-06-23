@@ -1,4 +1,4 @@
-package com.axonactive.coffeeshopmanagement.api.request;
+package com.axonactive.coffeeshopmanagement.controller.request;
 
 import com.axonactive.coffeeshopmanagement.entities.enums.EmployeeRole;
 import com.axonactive.coffeeshopmanagement.entities.enums.EmployeeType;

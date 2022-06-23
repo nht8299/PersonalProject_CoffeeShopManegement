@@ -1,10 +1,10 @@
-package com.axonactive.coffeeshopmanagement.api;
+package com.axonactive.coffeeshopmanagement.controller;
 
 import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.ReceiptsAndPaymentsService;
 import com.axonactive.coffeeshopmanagement.service.dto.ReceiptsAndPaymentsDto;
 import com.axonactive.coffeeshopmanagement.service.mapper.ReceiptsAndPaymentsMapper;
-import com.axonactive.coffeeshopmanagement.api.request.ReceiptsAndPaymentsRequest;
+import com.axonactive.coffeeshopmanagement.controller.request.ReceiptsAndPaymentsRequest;
 import com.axonactive.coffeeshopmanagement.entities.ReceiptsAndPayments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

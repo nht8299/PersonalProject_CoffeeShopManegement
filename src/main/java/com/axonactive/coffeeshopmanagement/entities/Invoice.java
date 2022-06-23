@@ -23,7 +23,7 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Double totalPrice;
+    private Integer totalPrice;
 
     @NotNull
     private LocalDate date;
@@ -51,8 +51,8 @@ public class Invoice {
     List<InvoiceDetail> invoiceDetailsList;
 
 
-    public Double getTotalPrice() {
-        double totalPrice = 0;
+    public Integer getTotalPrice() {
+        int totalPrice = 0;
         if (null == this.invoiceDetailsList) {
             return totalPrice;
         }else {

@@ -27,7 +27,7 @@ public class InvoiceDetail {
 
     private Double discount;
 
-    private Double finalPrice;
+    private Integer finalPrice;
 
     @JoinColumn(name = "invoice_id", nullable = false)
     @OnDelete(action = CASCADE)
@@ -39,10 +39,10 @@ public class InvoiceDetail {
     @ManyToOne
     private Item item;
 
-    public Double getFinalPrice() {
-        double finalPrice;
+    public Integer getFinalPrice() {
+        int finalPrice;
         if (this.discount != 0) {
-            finalPrice = (this.item.getPrice() * this.quantity)-(this.item.getPrice()*this.quantity*this.discount);
+            finalPrice =(this.item.getPrice() * this.quantity)-((int)(this.item.getPrice()*this.quantity*this.discount));
         } else {
             finalPrice = this.item.getPrice() * this.quantity;
         }

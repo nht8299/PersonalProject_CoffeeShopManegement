@@ -1,10 +1,10 @@
-package com.axonactive.coffeeshopmanagement.api;
+package com.axonactive.coffeeshopmanagement.controller;
 
 import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.InvoiceDetailService;
 import com.axonactive.coffeeshopmanagement.service.dto.InvoiceDetailDto;
 import com.axonactive.coffeeshopmanagement.service.mapper.InvoiceDetailMapper;
-import com.axonactive.coffeeshopmanagement.api.request.InvoiceDetailRequest;
+import com.axonactive.coffeeshopmanagement.controller.request.InvoiceDetailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

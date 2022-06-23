@@ -1,4 +1,4 @@
-package com.axonactive.coffeeshopmanagement.api.request;
+package com.axonactive.coffeeshopmanagement.controller.request;
 
 import com.axonactive.coffeeshopmanagement.entities.enums.ItemStatus;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,7 @@ public class ItemRequest {
 
     private String id;
     private String name;
-    private Double price;
+    private Integer price;
     private ItemStatus status;
     private Integer categoryId;
 }

@@ -31,7 +31,7 @@ public class ReceiptsAndPayments {
     private ReceiptsOrPayments Type;
 
     @NotNull
-    private Double Amount;
+    private Integer Amount;
 
     @NotNull
     private String Content;

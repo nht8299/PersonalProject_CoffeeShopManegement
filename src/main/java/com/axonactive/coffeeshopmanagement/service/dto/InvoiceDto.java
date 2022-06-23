@@ -19,7 +19,7 @@ public class InvoiceDto {
     private String id;
     private LocalDate date;
     private LocalTime time;
-    private Double totalPrice;
+    private Integer totalPrice;
     private PaymentMethod paymentMethod;
     private String customerName;
     private String customerPhoneNumber;
