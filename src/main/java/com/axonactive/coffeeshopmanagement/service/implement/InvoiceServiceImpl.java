@@ -60,7 +60,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         newInvoice.setTime(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
         if (employeeService.findEmployee(requestInvoice.getEmployeeId()).get().getCoffeeShop().equals(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId()).get())) {
             newInvoice.setEmployee(employeeService.findEmployee(requestInvoice.getEmployeeId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found haha: " + requestInvoice.getEmployeeId())));
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + requestInvoice.getEmployeeId())));
             newInvoice.setCoffeeShop(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId())
                     .orElseThrow(() -> new ResourceNotFoundException("CoffeeShop not found with id: " + requestInvoice.getCoffeeShopId())));
         } else throw new ResourceNotFoundException("Business exception!");
