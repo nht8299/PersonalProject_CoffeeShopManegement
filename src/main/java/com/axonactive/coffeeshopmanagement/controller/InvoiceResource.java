@@ -52,7 +52,8 @@ public class InvoiceResource {
     @GetMapping("/{invoiceId}/invoice_details/{id}")
     public ResponseEntity<InvoiceDetailDto> getInvoiceDetailsById(@PathVariable(value = "invoiceId") Integer invoiceId, @PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
         if (invoiceService.invoiceIsExist(invoiceId)) {
-            return ResponseEntity.ok(invoiceDetailMapper.toDto(invoiceService.findInvoice(invoiceId).getInvoiceDetailsList().stream()
+            return ResponseEntity.ok(invoiceDetailMapper.toDto(invoiceService.findInvoice(invoiceId).getInvoiceDetailsList()
+                    .stream()
                     .filter(invoiceDetail -> invoiceDetail.getId().equals(id))
                     .findFirst()
                     .orElseThrow(() -> new ResourceNotFoundException("Invoice details not found with id: " + id))));

@@ -31,6 +31,12 @@ public class CustomerResource {
         return ResponseEntity.ok(customerMapper.toDtos(customerService.getAll()));
     }
 
+
+    @GetMapping("/entity/{id}")
+    public  ResponseEntity<Customer> findCustomerByIdReturnEntity(@PathVariable(value = "id") Integer id) throws ResourceNotFoundException {
+        return ResponseEntity.ok(customerService.findCustomer(id).orElseThrow( () -> new  ResourceNotFoundException("Customer not found: " +id)));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDto> findCustomerById(@PathVariable(value = "id") Integer id,
                                                         @RequestParam(value = "phoneNumber", required = false) String phoneNumber) throws ResourceNotFoundException {
@@ -50,7 +56,7 @@ public class CustomerResource {
                 .body(customerMapper.toDto(createCustomer));
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Integer id) {
         customerService.deleteCustomer(id);
         return ResponseEntity.noContent().build();

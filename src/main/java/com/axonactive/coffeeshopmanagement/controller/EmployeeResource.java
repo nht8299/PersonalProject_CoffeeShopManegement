@@ -4,6 +4,8 @@ import com.axonactive.coffeeshopmanagement.exception.ResourceNotFoundException;
 import com.axonactive.coffeeshopmanagement.service.CoffeeShopService;
 import com.axonactive.coffeeshopmanagement.service.EmployeeService;
 import com.axonactive.coffeeshopmanagement.service.dto.EmployeeDto;
+import com.axonactive.coffeeshopmanagement.service.dto.EmployeeFullDataDto;
+import com.axonactive.coffeeshopmanagement.service.mapper.EmployeeFullDataMapper;
 import com.axonactive.coffeeshopmanagement.service.mapper.EmployeeMapper;
 import com.axonactive.coffeeshopmanagement.controller.request.EmployeeRequest;
 import com.axonactive.coffeeshopmanagement.entities.Employee;
@@ -30,6 +32,9 @@ public class EmployeeResource {
     @Autowired
     EmployeeMapper employeeMapper;
 
+    @Autowired
+    EmployeeFullDataMapper employeeFullDataMapper;
+
     @GetMapping
     public ResponseEntity<List<EmployeeDto>> getAll(){
         return ResponseEntity.ok(employeeMapper.toDtos(employeeService.getAll()));
@@ -44,6 +49,13 @@ public class EmployeeResource {
         return ResponseEntity.ok(employeeMapper.toDto(employeeService.findByPhoneNumber(phoneNumber)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not found: "+phoneNumber))));
     }
+
+    @GetMapping("/full-data/{id}")
+    public  ResponseEntity<EmployeeFullDataDto> findEmployeeFullData(@PathVariable(value = "id") String id) throws  ResourceNotFoundException{
+        return ResponseEntity.ok(employeeFullDataMapper.toDto(employeeService.findEmployee(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found: "+ id))));
+    }
+
 
     @PostMapping
     public ResponseEntity<EmployeeDto> add(@RequestBody EmployeeRequest requestEmployee) throws ResourceNotFoundException {
@@ -63,6 +75,7 @@ public class EmployeeResource {
         }
         return ResponseEntity.noContent().build();
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeDto> update(@PathVariable(value = "id")String id,@RequestBody EmployeeRequest requestEmployee) throws ResourceNotFoundException {

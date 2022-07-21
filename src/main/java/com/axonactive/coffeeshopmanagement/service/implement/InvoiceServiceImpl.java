@@ -60,7 +60,7 @@ public class InvoiceServiceImpl implements InvoiceService {
         newInvoice.setTime(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
         if (employeeService.findEmployee(requestInvoice.getEmployeeId()).get().getCoffeeShop().equals(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId()).get())) {
             newInvoice.setEmployee(employeeService.findEmployee(requestInvoice.getEmployeeId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + requestInvoice.getEmployeeId())));
+                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found haha: " + requestInvoice.getEmployeeId())));
             newInvoice.setCoffeeShop(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId())
                     .orElseThrow(() -> new ResourceNotFoundException("CoffeeShop not found with id: " + requestInvoice.getCoffeeShopId())));
         } else throw new ResourceNotFoundException("Business exception!");
@@ -107,39 +107,44 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     @Override
     public Invoice update(Integer id, InvoiceRequest requestInvoice) throws ResourceNotFoundException {
-        Invoice updateInvoice = new Invoice();
-        updateInvoice.setDate(LocalDate.now());
-        updateInvoice.setTime(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
-        if (employeeService.findEmployee(requestInvoice.getEmployeeId()).get().getCoffeeShop().equals(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId()).get())) {
-            updateInvoice.setEmployee(employeeService.findEmployee(requestInvoice.getEmployeeId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + requestInvoice.getEmployeeId())));
-            updateInvoice.setCoffeeShop(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId())
-                    .orElseThrow(() -> new ResourceNotFoundException("CoffeeShop not found with id: " + requestInvoice.getCoffeeShopId())));
-        } else throw new ResourceNotFoundException("Business exception!");
-        updateInvoice.setCustomer(customerService.findCustomer(requestInvoice.getCustomerId())
-                .orElseThrow(() -> new ResourceNotFoundException("customer not found: " + requestInvoice.getCustomerId())));
-        if (requestInvoice.getInvoiceDetailsRequest() != null) {
-            List<InvoiceDetail> invoiceDetailList = new ArrayList<>();
-            for (InvoiceDetailRequest invoiceDetailsRequest : requestInvoice.getInvoiceDetailsRequest()) {
-                InvoiceDetail newInvoiceDetail = new InvoiceDetail();
-                newInvoiceDetail.setItem(itemService.findItem(invoiceDetailsRequest.getItemId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + invoiceDetailsRequest.getItemId())));
-                if ( null == newInvoiceDetail.getDiscount() ){
-                    newInvoiceDetail.setDiscount(0.0);
-                }else {
-                    newInvoiceDetail.setDiscount(invoiceDetailsRequest.getDiscount());
+        if ( employeeService.findEmployee(requestInvoice.getEmployeeId()).isPresent() ) {
+            Invoice updateInvoice = invoiceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + requestInvoice.getEmployeeId()));
+
+            updateInvoice.setDate(LocalDate.now());
+            updateInvoice.setTime(LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"))));
+
+            if ( employeeService.findEmployee(requestInvoice.getEmployeeId()).get().getCoffeeShop()
+                    .equals(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId()).get()) ) {
+                updateInvoice.setEmployee(employeeService.findEmployee(requestInvoice.getEmployeeId())
+                        .orElseThrow(() -> new ResourceNotFoundException("Employee not found: " + requestInvoice.getEmployeeId())));
+                updateInvoice.setCoffeeShop(coffeeShopService.findCoffeeShop(requestInvoice.getCoffeeShopId())
+                        .orElseThrow(() -> new ResourceNotFoundException("CoffeeShop not found with id: " + requestInvoice.getCoffeeShopId())));
+            } else throw new ResourceNotFoundException("Business exception!");
+            updateInvoice.setCustomer(customerService.findCustomer(requestInvoice.getCustomerId())
+                    .orElseThrow(() -> new ResourceNotFoundException("customer not found: " + requestInvoice.getCustomerId())));
+            if ( requestInvoice.getInvoiceDetailsRequest() != null ) {
+                List<InvoiceDetail> invoiceDetailList = new ArrayList<>();
+                for (InvoiceDetailRequest invoiceDetailsRequest : requestInvoice.getInvoiceDetailsRequest()) {
+                    InvoiceDetail newInvoiceDetail = new InvoiceDetail();
+                    newInvoiceDetail.setItem(itemService.findItem(invoiceDetailsRequest.getItemId())
+                            .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + invoiceDetailsRequest.getItemId())));
+                    if ( null == newInvoiceDetail.getDiscount() ) {
+                        newInvoiceDetail.setDiscount(0.0);
+                    } else {
+                        newInvoiceDetail.setDiscount(invoiceDetailsRequest.getDiscount());
+                    }
+                    newInvoiceDetail.setQuantity(invoiceDetailsRequest.getQuantity());
+                    newInvoiceDetail.setFinalPrice(newInvoiceDetail.getFinalPrice());
+                    newInvoiceDetail.setInvoice(updateInvoice);
+                    invoiceDetailList.add(newInvoiceDetail);
                 }
-                newInvoiceDetail.setQuantity(invoiceDetailsRequest.getQuantity());
-                newInvoiceDetail.setFinalPrice(newInvoiceDetail.getFinalPrice());
-                newInvoiceDetail.setInvoice(updateInvoice);
-                invoiceDetailList.add(newInvoiceDetail);
-            }
-            updateInvoice.setInvoiceDetailsList(invoiceDetailList);
-            updateInvoice.setPaymentMethod(requestInvoice.getPaymentMethod());
+                updateInvoice.setInvoiceDetailsList(invoiceDetailList);
+                updateInvoice.setPaymentMethod(requestInvoice.getPaymentMethod());
+
         }
         return invoiceRepository.saveAndFlush(updateInvoice);
+        }else throw new ResourceNotFoundException("Invoice not found with id"+id);
     }
-
     public boolean invoiceIsExist(Integer id) {
         return invoiceRepository.existsById(id);
     }
